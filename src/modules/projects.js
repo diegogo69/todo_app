@@ -1,21 +1,32 @@
-// Project class
-class Project {
-    constructor( {title="Some project"} ) {
-        this.title = title; // string
-        this.tasks = []; // array
-        this.description = ""; // string
-        this.taskgroups = []; // array
-        this.completed = false; // boolean
+const projects = ( function() {
+
+    // List of projects
+    let projects = [];
+
+    // Add project from projects
+    function addProject(project) {
+        projects.push(project);
     }
 
-    addTask(task) {
-        this.tasks.push(task);
-        task.project = this;
+    // Remove project from projects
+    function removeProject(project) {
+        let index = projects.indexOf(project);
+        if (index > -1) {
+            projects.splice(index, 1);
+        }
     }
-}
-// let p1 = new Project( {title: "Test project"});
-// p1.addTask(t1);
-// p1.tasks
-// t1.project.title
 
-export { Project }
+    function getProjects() {
+        // Copy of list of projects array
+        let arr = [];
+        for (let project of projects) {
+            arr.push(project);
+        }
+        return arr;
+    }
+
+    return { addProject, removeProject, getProjects };
+
+})();
+
+export { projects }

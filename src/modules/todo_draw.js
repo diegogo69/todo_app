@@ -1,6 +1,6 @@
 // Draw for base functional todo app
 // Priority. 1 low. 2 normal. 3 high. 4 urgent
-import { Project } from "./projects.js"
+import { Project } from "./project.js"
 import { Task, TaskGroup } from "./tasks.js"
 import { Subtask } from "./subtasks.js"
 
@@ -20,7 +20,7 @@ let projects = [];
 function createProject( {title} ) {
     // Create project
     let project = new Project( {title} );
-    // Add it to list of projects
+    // Add it to list of projects. No, bcs that's an external matter
     projects.push(project);
     // Return its value
     return project;
