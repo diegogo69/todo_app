@@ -4,7 +4,7 @@ class Project {
         this.title = title; // string
         this.tasks = []; // array
         this.description = ""; // string
-        this.taskgroups = null; // Taskgroup obj
+        this.taskgroups = []; // Array of Taskgroup obj
         this.completed = false; // boolean
     }
 
@@ -56,16 +56,30 @@ class Project {
     // Add taskgroup 1 by 1 or as a list as well
     addTaskgroup(taskgroup) {
 
+        // This actually doesn't make sense
+        // Because yes, we can grab many tasks
+        // But they are wrapped in ONE taskgroup
+        // We are not creating a task group for every task
+
         // If arg passed is iterable
-        if (Array.isArray(taskgroup)) {
-            for (let task of taskgroup) {
-                // add to subtasks prop
-                this.taskgroups.push(task);
-            }
-            return
-        }
+        // if (Array.isArray(taskgroup)) {
+        //     for (let task of taskgroup) {
+        //         // add to subtasks prop
+        //         this.taskgroups.push(task);
+        //     }
+        //     return
+        // }
         // If arg passed not iterable
+
+        // Añadir heading / taskgroup al proyect
         this.taskgroups.push(taskgroup);
+
+        // Añadir heading to the tasks.taskgroup prop
+        for (let task of taskgroup.tasks) {
+
+            task.taskgroup = taskgroup;
+        }
+
 
     }
 

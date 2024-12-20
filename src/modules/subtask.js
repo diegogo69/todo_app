@@ -11,10 +11,12 @@ class Subtask {
     // If it's not associated with a task it does not get create
     static newSubtask( {title, task} ) {
         // if not task. no subtask
-        if (!task) { 
-            console.log("CANNOT CREATE A SUBTASK WITHOUT AN ASSOCIATED TASK")
-            return 
-        }
+        // the main idea is ok. but the task is added not here in the constructor
+        // But on the Task instance via addSubtask()
+        // if (!task) { 
+        //     console.log("CANNOT CREATE A SUBTASK WITHOUT AN ASSOCIATED TASK")
+        //     return 
+        // }
         let subtask = new Subtask( {title, task} );
         return subtask // Optimize
     }

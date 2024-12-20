@@ -1,8 +1,8 @@
 // Draw for base functional todo app
 // Priority. 1 low. 2 normal. 3 high. 4 urgent
 import { Project } from "./project.js"
-import { Task, TaskGroup } from "./tasks.js"
-import { Subtask } from "./subtasks.js"
+import { Task, TaskGroup } from "./task.js"
+import { Subtask } from "./subtask.js"
 
 
 // ----- PROJECTS -------

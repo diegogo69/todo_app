@@ -25,7 +25,8 @@ const projects = ( function() {
         return arr;
     }
 
-    return { addProject, removeProject, getProjects };
+    // make projects private
+    return { projects, addProject, removeProject, getProjects };
 
 })();
 

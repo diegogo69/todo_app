@@ -1,13 +1,18 @@
 // Task class
 class Task {
-    constructor( {title, project="default", dueDate=null, priority=2} ) {
+    constructor( {title, project=null, dueDate=null, priority=2} ) {
         this.title = title; // title
         this.project = project; // class
         this.dueDate = dueDate; // Date obj stored in json as string
         this.priority = priority; // number. 1 2 3 
+        this.taskgroup = null;
         this.notes = null; // string
         this.subtasks = []; // array
         this.completed = false; // boolean
+    }
+
+    addTaskgroup(taskgroup) {
+        this.taskgroup = taskgroup;
     }
 
     // STATIC METHODS
@@ -77,6 +82,7 @@ class Task {
     // Add subtask. It should have a task associated
     addSubtask(subtask) {
         this.subtasks.push(subtask);
+        subtask.task = this;
     }
 
     // REMOVE

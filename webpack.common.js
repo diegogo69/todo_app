@@ -25,10 +25,10 @@ module.exports = {
       },
 
       // Load images from HTML using HTML-Loader
-      {
-        test: /\.html$/i,
-        loader: "html-loader",
-      },
+      // {
+      //   test: /\.html$/i,
+      //   loader: "html-loader",
+      // },
 
       // Load images on JavaScript via asset/resource rule
       {
