@@ -77,6 +77,13 @@ class Project {
         // Añadir heading to the tasks.taskgroup prop
         for (let task of taskgroup.tasks) {
 
+            // for when i'm creating subtasks from primitive not objects
+            if (typeof task !== "object") {
+                let title = task;
+                task = {};
+                task.title = title;
+            }
+
             task.taskgroup = taskgroup;
         }
 

@@ -8,6 +8,8 @@ import { Task } from "./modules/task.js";
 import { Subtask } from "./modules/subtask.js";
 import { TaskGroup } from "./modules/taskgroup.js";
 
+import { createAddTaskForm  } from "./modules/add_task_form.js";
+
 const log = console.log;
 
 const w = { projects, Project, Task, Subtask, TaskGroup };
@@ -29,6 +31,7 @@ w.def1.addTask(w.t1);
 
 // Create custom projects
 w.cp1 = w.Project.newProject({title: "Probar  y testear main items",});
+w.cp1.setDescription("Lista de proyecto de prueba para descripcion")
 w.projects.addProject(w.cp1);
 
 
@@ -50,5 +53,56 @@ w.ct1.addSubtask(w.st1);
 
 
 // Create taskgroup
-w.tg1 = w.TaskGroup.newTaskgroup({title: "Heading de subtareas", tasks: [w.ct1, "tarea 2", "tarea 33",]});
+w.tg1 = w.TaskGroup.newTaskgroup({title: "Heading de grupo de tareas", tasks: [w.ct1, "tarea 2", "tarea 33",]});
 w.cp1.addTaskgroup(w.tg1);
+
+log(projects.projects)
+
+
+
+
+// -------------------- DOM STUFF -------------------------
+const editorNode = document.querySelector('.editor');
+const generalNode = document.querySelector('.general');
+
+
+function clearNode(node) {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+      }
+}
+
+//  DOM HANDLING ADD TASK
+// Is this only DOM?
+const addTaskBtn = document.querySelector('#addTask');
+
+addTaskBtn.addEventListener('click', displayTaskForm);
+
+function displayTaskForm() {
+    const addTaskForm = createAddTaskForm();
+
+    clearNode(editorNode);
+    editorNode.appendChild(addTaskForm);
+
+    // Autofocus
+    editorNode.querySelector('#taskTitle').focus()
+
+    // Submit form handler
+    const submitBtn = editorNode.querySelector('#submitBtn');
+    submitBtn.addEventListener('click', taskFromForm);
+    
+}
+
+function taskFromForm()
+
+
+// Textarea dynamic height
+let textareas = document.querySelectorAll("textarea");
+textareas.forEach(textarea => {
+    textarea.addEventListener('input', autoResize);
+});
+
+function autoResize() {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+}
