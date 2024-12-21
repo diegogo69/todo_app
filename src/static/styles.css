@@ -1,3 +1,26 @@
 svg {
     width: 24px;
 }
+
+body {
+    display: flex;
+    height: 100vh;
+}
+
+
+aside {
+    width: 14rem;
+}
+
+main {
+    display: flex;
+    flex: 1;
+}
+
+.general {
+    flex: 1;
+}
+
+.editor {
+    flex: 1;
+}
