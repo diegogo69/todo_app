@@ -1,13 +1,13 @@
 // Task class
 class Task {
-    constructor( {title, project=null, dueDate=null, priority=2} ) {
+    constructor( { title, project=null, dueDate=null, priority=2, subtasks=[], description=null, taskgroup=null} ) {
         this.title = title; // title
         this.project = project; // class
         this.dueDate = dueDate; // Date obj stored in json as string
         this.priority = priority; // number. 1 2 3 
-        this.taskgroup = null;
-        this.notes = null; // string
-        this.subtasks = []; // array
+        this.taskgroup = taskgroup;
+        this.description = description; // string
+        this.subtasks = subtasks; // array
         this.completed = false; // boolean
     }
 
@@ -17,8 +17,8 @@ class Task {
 
     // STATIC METHODS
 
-    static newTask( {title, project, dueDate, priority} ) {
-        let task = new Task( {title, project, dueDate, priority} );
+    static newTask( {title, project, dueDate, priority, subtasks, description, taskgroup} ) {
+        let task = new Task( {title, project, dueDate, priority, subtasks, description, taskgroup} );
         return task // Optimize
     }
 
@@ -71,9 +71,9 @@ class Task {
 
     // ---- NOTES ----
 
-    // Set notes, it can be both empty or string
-    setNotes(notes) {
-        this.notes = notes;
+    // Set description, it can be both empty or string
+    setDescription(description) {
+        this.description = description;
     }
 
     // ---- SUBTASKS ----

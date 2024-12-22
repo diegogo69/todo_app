@@ -1,19 +1,24 @@
 function createAddTaskForm() {
     const form = document.createElement('form');
+    form.id = "addTaskForm";
 
 
     const taskTitle = document.createElement('textarea');
     taskTitle.id = "taskTitle";
-    taskTitle.spellcheck = "false";
+    taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
     taskTitle.autofocus = true;
+    taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
+
 
     form.appendChild(taskTitle);
 
     const taskDescription = document.createElement('textarea');
     taskDescription.id = "taskDescription";
-    taskDescription.spellcheck = "false";
+    taskDescription.spellcheck = false;
     taskDescription.placeholder = "Notes";
+    taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
+
 
 
     form.appendChild(taskDescription);
@@ -33,6 +38,7 @@ function createAddTaskForm() {
     subtask.spellcheck = "false";
     subtask.classList.add('subtask');
     subtask.placeholder = "Add a new subtask";
+    subtask.value = "DOM NEWLY CREATED TASK YEIII";
 
     subtaskLi.appendChild(subtask);
     subtaskUl.appendChild(subtaskLi);
@@ -42,6 +48,8 @@ function createAddTaskForm() {
     const submitBtn = document.createElement('button');
     submitBtn.id = "submitBtn"
     submitBtn.type = "submit";
+    submitBtn.textContent = "Add";
+
 
     form.appendChild(submitBtn);
 

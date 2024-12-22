@@ -9,6 +9,7 @@ import { Subtask } from "./modules/subtask.js";
 import { TaskGroup } from "./modules/taskgroup.js";
 
 import { createAddTaskForm  } from "./modules/add_task_form.js";
+import { enterKeyPressed } from "./modules/enterKeyPressed.js";
 
 const log = console.log;
 
@@ -45,7 +46,7 @@ w.ct1 = w.Task.newTask({
 // Add custom task to custom project
 w.cp1.addTask(w.ct1);
 // Add notes/description to custom task
-w.ct1.setNotes("Prueba y test de añadir notas/descripción a tarea");
+w.ct1.setDescription("Prueba y test de añadir notas/descripción a tarea");
 
 // Create subtasks
 w.st1 = w.Subtask.newSubtask({title: "crear subtarea numero uno"});
@@ -81,26 +82,55 @@ addTaskBtn.addEventListener('click', displayTaskForm);
 function displayTaskForm() {
     const addTaskForm = createAddTaskForm();
 
+    function sayHello() { log("HELLOOOOOOO") }
+
     clearNode(editorNode);
     editorNode.appendChild(addTaskForm);
 
+    // Textarea dynamic height
+    const textareas = document.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', autoResize);
+        textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello));
+    });
+
+    const submitBtn = document.querySelector('#addTaskForm');
+    submitBtn.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        log("it works")
+
+        // Query selectors
+        const addTaskForm = editorNode.querySelector('#addTaskForm');
+        const taskTitle = addTaskForm.querySelector('#taskTitle');
+        const taskDescription = addTaskForm.querySelector('#taskDescription');
+        const taskSubtasks = addTaskForm.querySelectorAll('.subtask');
+
+        // Data extraction
+        const title = taskTitle.value;
+        const description = taskDescription.value;
+        const subtasks = [];
+        taskSubtasks.forEach(task => {
+            subtasks.push(task.value);
+            log("push subtask")
+        });
+
+        // Create task instance
+        const newTask = Task.newTask( {title, description, subtasks} )
+        w.newTask = newTask;
+        
+    })
+
     // Autofocus
     editorNode.querySelector('#taskTitle').focus()
-
-    // Submit form handler
-    const submitBtn = editorNode.querySelector('#submitBtn');
-    submitBtn.addEventListener('click', taskFromForm);
     
 }
 
-function taskFromForm()
+function taskFromForm() {
+
+}
 
 
-// Textarea dynamic height
-let textareas = document.querySelectorAll("textarea");
-textareas.forEach(textarea => {
-    textarea.addEventListener('input', autoResize);
-});
 
 function autoResize() {
     this.style.height = 'auto';
