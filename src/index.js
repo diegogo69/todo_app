@@ -8,8 +8,10 @@ import { Task } from "./modules/task.js";
 import { Subtask } from "./modules/subtask.js";
 import { TaskGroup } from "./modules/taskgroup.js";
 
+// CREATE DOM ELEMENTS
 import { createAddTaskForm  } from "./modules/add_task_form.js";
 import { createAddProjectForm  } from "./modules/add_project_form.js";
+import { createToolProjects } from "./modules/create_tool_projects.js";
 
 import { enterKeyPressed } from "./modules/enterKeyPressed.js";
 
@@ -69,62 +71,21 @@ const addTaskBtn = document.querySelector('#addTask');
 addTaskBtn.addEventListener('click', displayTaskForm);
 
 function displayTaskForm() {
+    // Creeate form
     const addTaskForm = createAddTaskForm();
 
-    function sayHello() { log("HELLOOOOOOO") }
+    // Render form
+    // clearNode(editorNode);
+    // editorNode.appendChild(addTaskForm);
+    renders.editorForm(addTaskForm);
 
-    clearNode(editorNode);
-    editorNode.appendChild(addTaskForm);
+    // Textareas dynamic height on form
+    textareaDynamicHeight(addTaskForm);
 
-    // Textarea dynamic height
-    const textareas = document.querySelectorAll("textarea");
-    textareas.forEach(textarea => {
-        textarea.addEventListener('input', autoResize);
-        textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello));
-    });
+    // On submit event listener
 
     const submitBtn = document.querySelector('#addTaskForm');
-    submitBtn.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        log("it works")
-
-        // Query selectors
-        const addTaskForm = editorNode.querySelector('#addTaskForm');
-        const taskTitle = addTaskForm.querySelector('#taskTitle');
-        const taskDescription = addTaskForm.querySelector('#taskDescription');
-        const taskSubtasks = addTaskForm.querySelectorAll('.subtask');
-
-        // Data extraction
-        const title = taskTitle.value;
-        const description = taskDescription.value;
-        const subtasks = [];
-
-        // Reference project by index in projects array
-        const project = DEFAULT_PROJECT;
-
-        taskSubtasks.forEach(task => {
-            subtasks.push(task.value);
-            log("push subtask");
-        });
-
-        // Create task instance
-        const newTask = Task.newTask( {title, description, subtasks, project} );
-        
-        // Add new task to default project
-        PROJECTS.projects[DEFAULT_PROJECT]["tasks"].push(newTask);
-        log('Task added to default project');
-
-        // Stringify projects array
-        const projectsJSON = JSON.stringify([PROJECTS.projects]);
-        
-        // Reasign new projects array in localStorage
-        localStorage.setItem('projects', projectsJSON);
-
-        log('Local Storage project reasigned succesfully');
-        log(localStorage.getItem('projects'));
-        
-    })
+    submitBtn.addEventListener('submit', taskSubmitHandler)
 
     // Autofocus
     editorNode.querySelector('#taskTitle').focus()
@@ -142,71 +103,82 @@ addProjectBtn.addEventListener('click', displayProjectForm);
 
 
 function displayProjectForm() {
+    // Create add project form
     const addProjectForm = createAddProjectForm();
 
-    function sayHello() { log("HELLOOOOOOO") }
+    // clearNode(editorNode);
+    // editorNode.appendChild(addProjectForm);
+    renders.editorForm(addProjectForm)
 
-    clearNode(editorNode);
-    editorNode.appendChild(addProjectForm);
-
-    // Textarea dynamic height
-    const textareas = document.querySelectorAll("textarea");
-    textareas.forEach(textarea => {
-        textarea.addEventListener('input', autoResize);
-        textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello));
-    });
+    // Textareas dynamic height on form
+    textareaDynamicHeight(addProjectForm);
 
     const submitBtn = document.querySelector('#addProjectForm');
-    submitBtn.addEventListener('submit', function(event) {
+    submitBtn.addEventListener('submit', projectSubmitHandler)
+
+
+    function projectSubmitHandler(event) {
         event.preventDefault();
 
+        log("Project submit handler works fine");
+        log("LOG EVENT: ");
+        log(event.target); // Form node
         log("it works")
 
-        // Query selectors
-        const addProjectForm = editorNode.querySelector('#addProjectForm');
-        const projectTitle = addProjectForm.querySelector('#projectTitle');
-        const projectDescription = addProjectForm.querySelector('#projectDescription');
-        const projectProjectTasks = addProjectForm.querySelectorAll('.projectTasks');
-
-        // Data extraction
-        const title = projectTitle.value;
-        const description = projectDescription.value;
-        const tasks = [];
-        projectProjectTasks.forEach(project => {
-            tasks.push(project.value);
-            log("push subproject")
-        });
-
+        // Retrieve data from form
+        const taskData = getProjectFormData(); // {title, description, tasks}
         // Create project instance
-        const newProject = Project.newProject( {title, description, tasks} )
-
-        // Add to local Storage
-        
-        // Retrieve current array of projects in locaStorage
-        // From JSON to array
-        // let projects = JSON.parse(localStorage.getItem('projects'));
-        // projects.push(newProject);
-
+        const newProject = Project.newProject( taskData )
         // Use PROJECTS.Projects instead
-        // Push new project to projects array
-        PROJECTS.projects.push(newProject);
+        PROJECTS.addProject(newProject);
         log('Project added succesfully to projects array');
-        
-        // Stringify projects array
-        const projectsJSON = JSON.stringify([PROJECTS.projects]);
-
         // Reasign new projects array in localStorage
-        localStorage.setItem('projects', projectsJSON);
-
-        log('Local Storage Projects array reasigned succesfully');
-        log(localStorage.getItem('projects'));        
-        
-    })
+        projectsToLocalStorage();   
+        // Render projects in toolbar
+        renders.toolProjects(PROJECTS.projects);
+    }
 
     // Autofocus
     editorNode.querySelector('#projectTitle').focus()
     
 }
+
+
+
+function getProjectFormData() {
+    // Query selectors
+    const addProjectForm = editorNode.querySelector('#addProjectForm');
+    const projectTitle = addProjectForm.querySelector('#projectTitle');
+    const projectDescription = addProjectForm.querySelector('#projectDescription');
+    const projectProjectTasks = addProjectForm.querySelectorAll('.projectTasks');
+
+    // Data extraction
+    const title = projectTitle.value;
+    const description = projectDescription.value;
+    const tasks = [];
+    projectProjectTasks.forEach(project => {
+        tasks.push(project.value);
+        log("push subproject")
+    });
+
+    return {title, description, tasks};
+    
+}
+
+
+
+function textareaDynamicHeight(form) {
+    const textareas = form.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', textareaAutoResize);
+        textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello));
+    });
+}
+
+
+// callback function for testing on enter key event
+function sayHello() { log("HELLOOOOOOO") }
+
 
 function SaveDataToLocalStorage(data)
 {
@@ -222,7 +194,97 @@ function SaveDataToLocalStorage(data)
 }
 
 
-function autoResize() {
+function textareaAutoResize() {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
+}
+
+
+// ------------ DOM RENDERING ------------
+const renders = ( function() {
+    const wrapper = document.querySelector('#tool-projects-wrapper');
+
+    function toolProjects(projects) {
+        clearNode(wrapper);
+        const projectsUl = createToolProjects(projects);
+        wrapper.appendChild(projectsUl);
+    }
+
+    function editorForm(form) {
+        clearNode(editorNode);
+        editorNode.appendChild(form);
+    }
+    return { toolProjects, editorForm, };
+} )();
+
+
+// Retrieve data from add task's form
+function getTaskFormData() {
+    // Query selectors
+    const addTaskForm = editorNode.querySelector('#addTaskForm');
+    const taskTitle = addTaskForm.querySelector('#taskTitle');
+    const taskDescription = addTaskForm.querySelector('#taskDescription');
+    const taskSubtasks = addTaskForm.querySelectorAll('.subtask');
+
+    // Data extraction
+    const title = taskTitle.value;
+    const description = taskDescription.value;
+    // Reference project by index in projects array
+    const project = DEFAULT_PROJECT;
+    // Retrieve subtasks
+    const subtasks = [];
+    taskSubtasks.forEach(task => {
+        subtasks.push(task.value);
+        log("push subtask");
+    });
+
+    return {title, description, subtasks, project};
+}
+
+
+
+// TASK SUBMIT FUNCTION HANDLER
+// Event gets passed automatically
+function taskSubmitHandler(event) {
+    event.preventDefault();
+    // Testing logs
+    log("Task submit handler works fine");
+    log("LOG EVENT: ");
+    log(event.target); // Form node
+    log("it works")
+
+    // Extract form data
+    const taskData = getTaskFormData(); // {title, description, subtasks, project}
+
+    // Create task instance
+    const newTask = Task.newTask( taskData );
+    
+    // Add new task to default project
+    addTaskToProject(newTask, DEFAULT_PROJECT);
+
+    // Assign PROJECTS array to localStorage 
+    projectsToLocalStorage();
+
+}
+
+
+// Add task to project. xd
+function addTaskToProject(task, project) {
+    PROJECTS.projects[project]["tasks"].push(task);
+    log('Task added to default project SUCCESSFULLY');
+
+}
+
+
+// Assign PROJECTS array to localStorage 
+function projectsToLocalStorage() {
+    // Stringify projects array
+    const projectsJSON = JSON.stringify([PROJECTS.projects]);
+    
+    // Reasign new projects array in localStorage
+    localStorage.setItem('projects', projectsJSON);
+
+    log('Local Storage project reasigned succesfully');
+    log(localStorage.getItem('projects'));
+
 }
