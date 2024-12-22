@@ -15,14 +15,54 @@ import { enterKeyPressed } from "./modules/enterKeyPressed.js";
 
 const log = console.log;
 
-const DEFAULT_PROJECT = 0;
+const w = { PROJECTS, Project, Task, Subtask, TaskGroup };
+globalThis.w = w;
+// Import list of projects
+
+// Create Default Project
+w.def1 = w.Project.newProject({title: "Default"});
+// Default project in projects[0]
+w.PROJECTS.addProject(w.def1);
+console.log(w.PROJECTS.projects[0]);
+console.log(w.PROJECTS.projects[0] === w.def1); // true
+
+// Create default tasks
+// The way of creating default tasks, is by creating and adding them
+// On the Default Project using the addTask() method
+w.t1 = w.Task.newTask({title: "Probar project default"});
+w.def1.addTask(w.t1);
+
+// Create custom projects
+w.cp1 = w.Project.newProject({title: "Probar  y testear main items",});
+w.cp1.setDescription("Lista de proyecto de prueba para descripcion")
+w.projects.addProject(w.cp1);
+
+
+// Create custom tasks
+// Crear task with due date and high priority
+w.ct1 = w.Task.newTask({
+    title: "Crear custom task y añadirlas al custom project",
+    dueDate: "24 de diciembre",
+    priority: 4,
+})
+// Add custom task to custom project
+w.cp1.addTask(w.ct1);
+// Add notes/description to custom task
+w.ct1.setDescription("Prueba y test de añadir notas/descripción a tarea");
+
+// Create subtasks
+w.st1 = w.Subtask.newSubtask({title: "crear subtarea numero uno"});
+w.ct1.addSubtask(w.st1);
+
+
+// Create taskgroup
+w.tg1 = w.TaskGroup.newTaskgroup({title: "Heading de grupo de tareas", tasks: [w.ct1, "tarea 2", "tarea 33",]});
+w.cp1.addTaskgroup(w.tg1);
+
+log(projects.projects)
 
 
 // ---------------- LOCAL STORAGE ------------------
-
-// Clean Local storage
-localStorage.clear();
-
 
 // Init local Storage
 // If no projects in localStorage
@@ -30,17 +70,11 @@ if(!localStorage.getItem('projects')) {
 
     // Set PROJECTS.projects to empty
     PROJECTS.projects = [];
-
-    // Create default project
-    const defProject = Project.newProject({title: "Default"});
-
-    // Add default project
-    PROJECTS.projects.push(defProject);
     
     // Stringify array for projects in local storage
     // let projects = JSON.stringify([]);
-    const projectsJSON = JSON.stringify([PROJECTS.projects]);
-    localStorage.setItem('projects', projectsJSON);
+    let projects = JSON.stringify([PROJECTS.projects]);
+    localStorage.setItem('projects', projects);
 } 
 // If projects in local storage
 else {
@@ -101,7 +135,8 @@ function displayTaskForm() {
         const subtasks = [];
 
         // Reference project by index in projects array
-        const project = DEFAULT_PROJECT;
+        const indexDefProject = w.projects.projects.indexOf(w.def1)
+        const project = indexDefProject;
 
         taskSubtasks.forEach(task => {
             subtasks.push(task.value);
@@ -110,19 +145,26 @@ function displayTaskForm() {
 
         // Create task instance
         const newTask = Task.newTask( {title, description, subtasks, project} );
-        
-        // Add new task to default project
-        PROJECTS.projects[DEFAULT_PROJECT]["tasks"].push(newTask);
-        log('Task added to default project');
+        w.newTask = newTask;
 
-        // Stringify projects array
-        const projectsJSON = JSON.stringify([PROJECTS.projects]);
+        // Add task to default project
+        w.projects.projects[indexDefProject]["tasks"].push(newTask);
+
+
+        // Add to local Storage
+
+        // Retrieve current array of projects in locaStorage
+        // From JSON to array
+        // let projects = JSON.parse(localStorage.getItem('projects'));
+
+        // Push new project to projects array
+        projects[indexDefProject]["tasks"].push(newTask);
         
         // Reasign new projects array in localStorage
-        localStorage.setItem('projects', projectsJSON);
+        localStorage.setItem('projects', JSON.stringify(projects));
 
-        log('Local Storage project reasigned succesfully');
-        log(localStorage.getItem('projects'));
+        console.log(localStorage.getItem('projects'));
+        log('local storage');
         
     })
 
@@ -179,27 +221,27 @@ function displayProjectForm() {
 
         // Create project instance
         const newProject = Project.newProject( {title, description, tasks} )
+        w.newProject = newProject;
 
         // Add to local Storage
         
+        // Convert new project to JSON
+        // I think this is not needed 
+
         // Retrieve current array of projects in locaStorage
         // From JSON to array
-        // let projects = JSON.parse(localStorage.getItem('projects'));
-        // projects.push(newProject);
+        let projects = JSON.parse(localStorage.getItem('projects'));
 
-        // Use PROJECTS.Projects instead
         // Push new project to projects array
-        PROJECTS.projects.push(newProject);
-        log('Project added succesfully to projects array');
+        projects.push(newProject);
         
-        // Stringify projects array
-        const projectsJSON = JSON.stringify([PROJECTS.projects]);
-
         // Reasign new projects array in localStorage
-        localStorage.setItem('projects', projectsJSON);
+        localStorage.setItem('projects', JSON.stringify(projects));
 
-        log('Local Storage Projects array reasigned succesfully');
-        log(localStorage.getItem('projects'));        
+        console.log(localStorage.getItem('projects'));
+        log('local storage');
+        
+        
         
     })
 

@@ -4,12 +4,14 @@ function enterKeyPressed(event, fn) {
     const enterPressed = (event.key === "Enter");
     const shiftEnterPressed = (event.shiftKey && event.key === 'Enter');
 
+    // ignore shift + enter or any other non enter key
     if (!enterPressed || shiftEnterPressed) { return }
 
     // Cancel the default action, if needed
     event.preventDefault();
+    // Lose focus
     event.target.blur();
-    // Trigger the button element with a click
+    // Execute callback function
     fn();
 }
 

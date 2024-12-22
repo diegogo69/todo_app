@@ -1,4 +1,4 @@
-const projects = ( function() {
+const PROJECTS = ( function() {
 
     // List of projects
     let projects = [];
@@ -30,4 +30,4 @@ const projects = ( function() {
 
 })();
 
-export { projects }
+export { PROJECTS }
