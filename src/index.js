@@ -114,9 +114,10 @@ function displayTaskForm() {
             subtasks.push(task.value);
             log("push subtask")
         });
+        const project = w.projects.projects.indexOf(w.def1);
 
         // Create task instance
-        const newTask = Task.newTask( {title, description, subtasks} )
+        const newTask = Task.newTask( {title, description, subtasks, project} )
         w.newTask = newTask;
         
     })
