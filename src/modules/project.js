@@ -1,10 +1,10 @@
 // Project class
 class Project {
-    constructor( {title="Some project"} ) {
+    constructor( {title="Some project", tasks=[], description="", taskgroups=[]} ) {
         this.title = title; // string
-        this.tasks = []; // array
-        this.description = ""; // string
-        this.taskgroups = []; // Array of Taskgroup obj
+        this.tasks = tasks; // array
+        this.description = description; // string
+        this.taskgroups = taskgroups; // Array of Taskgroup obj
         this.completed = false; // boolean
     }
 
@@ -12,9 +12,9 @@ class Project {
 
     // Project.createProject
     // Simple, create a project by just typing its title
-    static newProject( {title} ) {
+    static newProject( {title, tasks, description, taskgroups} ) {
         // Create project
-        let project = new Project( {title} );
+        let project = new Project( {title, tasks, description, taskgroups} );
         // Return its value
         return project;
     }

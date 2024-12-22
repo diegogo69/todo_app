@@ -9,6 +9,8 @@ import { Subtask } from "./modules/subtask.js";
 import { TaskGroup } from "./modules/taskgroup.js";
 
 import { createAddTaskForm  } from "./modules/add_task_form.js";
+import { createAddProjectForm  } from "./modules/add_project_form.js";
+
 import { enterKeyPressed } from "./modules/enterKeyPressed.js";
 
 const log = console.log;
@@ -129,6 +131,59 @@ function displayTaskForm() {
 
 function taskFromForm() {
 
+}
+
+// Add project form
+const addProjectBtn = document.querySelector('#addProject');
+
+addProjectBtn.addEventListener('click', displayProjectForm);
+
+
+function displayProjectForm() {
+    const addProjectForm = createAddProjectForm();
+
+    function sayHello() { log("HELLOOOOOOO") }
+
+    clearNode(editorNode);
+    editorNode.appendChild(addProjectForm);
+
+    // Textarea dynamic height
+    const textareas = document.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', autoResize);
+        textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello));
+    });
+
+    const submitBtn = document.querySelector('#addProjectForm');
+    submitBtn.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        log("it works")
+
+        // Query selectors
+        const addProjectForm = editorNode.querySelector('#addProjectForm');
+        const projectTitle = addProjectForm.querySelector('#projectTitle');
+        const projectDescription = addProjectForm.querySelector('#projectDescription');
+        const projectProjectTasks = addProjectForm.querySelectorAll('.projectTasks');
+
+        // Data extraction
+        const title = projectTitle.value;
+        const description = projectDescription.value;
+        const tasks = [];
+        projectProjectTasks.forEach(project => {
+            tasks.push(project.value);
+            log("push subproject")
+        });
+
+        // Create project instance
+        const newProject = Project.newProject( {title, description, tasks} )
+        w.newProject = newProject;
+        
+    })
+
+    // Autofocus
+    editorNode.querySelector('#projectTitle').focus()
+    
 }
 
 
