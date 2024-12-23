@@ -28,7 +28,7 @@ const PROJECTS = ( function() {
     // Add task to project. xd
     function addTaskToProject(task, projectIndex) {
         projects[projectIndex]["tasks"].push(task);
-        log('Task added to default project SUCCESSFULLY');
+        console.log('Task added to default project SUCCESSFULLY');
     }
 
 

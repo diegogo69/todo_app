@@ -1,3 +1,5 @@
+import { handlers } from "./event_handlers.js";
+
 // Create project's html module
 function createProjectWrapper(project, index) {
     const projectWrapper = document.createElement('div');
@@ -31,27 +33,32 @@ function createProjectWrapper(project, index) {
 
 
     const footer = document.createElement('footer');
+
     const newTaskForm = document.createElement('form');
+    newTaskForm.dataset.formType = "task";
     newTaskForm.id = "newTaskForm";
     newTaskForm.classList.add('taskForm');
 
     const newTaskInput = document.createElement('input');
     newTaskInput.type = "text";
-    newTaskInput.classList.add('taskTitleInput');
+    newTaskInput.classList.add('formTitle');
     newTaskInput.placeholder = "Add task";
 
-    const hiddenIndex = document.createElement('input');
-    hiddenIndex.type = "hidden";
-    hiddenIndex.id = "projectIndex";
-    hiddenIndex.value = index;    
+    const projectIndex = document.createElement('input');
+    projectIndex.type = "hidden";
+    projectIndex.id = "projectIndex";
+    projectIndex.value = index;    
 
     const newTaskBtn = document.createElement('button');
     newTaskBtn.type = "submit";
     newTaskBtn.textContent = "+";
     
     newTaskForm.appendChild(newTaskInput);
-    newTaskForm.appendChild(hiddenIndex);
+    newTaskForm.appendChild(projectIndex);
     newTaskForm.appendChild(newTaskBtn);
+
+    newTaskForm.addEventListener('submit', handlers.taskSubmit);
+
 
     footer.appendChild(newTaskForm);
 

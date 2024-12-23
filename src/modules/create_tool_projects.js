@@ -1,18 +1,20 @@
+import { handlers } from "./event_handlers.js";
+
 function createToolProjects(projects) {
     // reference toolbar projects list
-    const toolProjects = document.createElement('ul');
+    const projectsUl = document.createElement('ul');
     
     for (let i = 0; i < projects.length; i++) {
         const li = document.createElement('li');
         li.textContent = projects[i].title;
         li.dataset.projectIndex = i;
 
-        toolProjects.appendChild(li)
+        projectsUl.appendChild(li)
     }
-    // for (let project of projects ) {
-    // }
 
-    return toolProjects;
+    projectsUl.addEventListener('click', handlers.toolProject)
+
+    return projectsUl;
 }
 
 export { createToolProjects }

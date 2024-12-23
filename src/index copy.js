@@ -300,11 +300,6 @@ function taskSubmitHandler(event) {
 }
 
 
-function updateProjectWrapper(projectIndex) {
-    const project = PROJECTS.get()[projectIndex];
-    const projectWrapper = createProjectWrapper(project, projectIndex);
-    renders.projectWrapper(projectWrapper);
-}
 
 // Add task to project. xd
 function addTaskToProject(task, project) {

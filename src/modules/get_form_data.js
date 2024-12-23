@@ -1,10 +1,11 @@
-function getFormData(form, item) {
+function getFormData(form) {
+    const formType = form.dataset.formType;
 
     const formTitle = form.querySelector('.formTitle');
     const formDescription = form.querySelector('.formDescription');
 
     // There will always be a title form control
-    const title = formTitle.value || `Unnamed ${item}`;
+    const title = formTitle.value || `Unnamed ${formType}`;
 
     let description = "";
     // There may not be a description form control
@@ -13,14 +14,14 @@ function getFormData(form, item) {
     }
 
     // IF IT'S A TASK FORM
-    if (item === "task") {
+    if (formType === "task") {
         const formSubtasks = form.querySelectorAll('.subtask');
-        const formProjectIndex = form.querySelector('#projectIndex');
+        const formProjectIndex = form.querySelector('.projectIndex');
         
-        let projectIndex = 0;
+        let project = 0;
         // If hidden input for project Index
         if (formProjectIndex) {
-            projectIndex = parseInt(formProjectIndex.value);
+            project = parseInt(formProjectIndex.value);
         }
         
         const subtasks = [];
@@ -28,7 +29,7 @@ function getFormData(form, item) {
         if (formSubtasks) {
             for (let subtask of formSubtasks) {
                 subtasks.push(subtask.value);
-                log("push subtask");
+                console.log("push subtask");
 
             }
         }
@@ -37,16 +38,16 @@ function getFormData(form, item) {
     }
 
     // IF IT'S A PROJECT FORM
-    if (item === "project") {
-        const formProjectTasks = form.querySelectorAll('.projectTasks');
+    if (formType === "project") {
+        // const formProjectTasks = form.querySelectorAll('.projectTasks');
         
-        // Do project forms have tasks? I don't think so
-        const tasks = [];
-        for (let projectTask of formProjectTasks) {
-            tasks.push(projectTask.value);
-            log("push subproject")
-        }
-        return {title, description, tasks};        
+        // // Do project forms have tasks? I don't think so
+        // const tasks = [];
+        // for (let projectTask of formProjectTasks) {
+        //     tasks.push(projectTask.value);
+        //     console.log("push subproject")
+        // }
+        return {title, description};        
     }
 }
 

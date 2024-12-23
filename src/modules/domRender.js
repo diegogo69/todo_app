@@ -1,9 +1,11 @@
 const domRender = ( function() {
+    const editorNode = document.querySelector('.editor');
+    const overviewNode = document.querySelector('#overview');
+    const toolProjectsNode = document.querySelector('#tool-projects-wrapper');
 
-    function toolProjects(projects) {
-        clearNode(wrapper);
-        const projectsUl = createToolProjects(projects);
-        wrapper.appendChild(projectsUl);
+    function toolProjects(projectsUl) {
+        clearNode(toolProjectsNode);
+        toolProjectsNode.appendChild(projectsUl);
     }
 
     function editorForm(form) {
@@ -12,10 +14,17 @@ const domRender = ( function() {
     }
 
     function projectWrapper(projectNode) {
-        clearNode(overview);
+        clearNode(overviewNode);
         overview.appendChild(projectNode)
 
     }
+
+    function clearNode(node) {
+        while (node.firstChild) {
+            node.removeChild(node.firstChild);
+        }
+    }
+
     return { toolProjects, editorForm, projectWrapper, };
 } )();
 

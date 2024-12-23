@@ -1,16 +1,18 @@
-import { handlers } from ".modules/event_handlers.js";
+import { handlers } from "./event_handlers.js";
 
 function createAddTaskForm() {
     const form = document.createElement('form');
     form.classList.add('taskForm');
     form.id = "addTaskForm";
+    form.dataset.formType = "task";
     // On submit event listener
     form.addEventListener('submit', handlers.taskSubmit);
 
 
     const taskTitle = document.createElement('textarea');
-    taskTitle.id = "taskTitle";
-    taskTitle.classList.add('taskTitleInput');
+    // taskTitle.id = "taskTitle";
+    // taskTitle.classList.add('taskTitleInput');
+    taskTitle.classList.add('formTitle');
     taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
     taskTitle.autofocus = true;
@@ -20,12 +22,11 @@ function createAddTaskForm() {
     form.appendChild(taskTitle);
 
     const taskDescription = document.createElement('textarea');
-    taskDescription.id = "taskDescription";
+    // taskDescription.id = "taskDescription";
+    taskDescription.classList.add('formDescription');
     taskDescription.spellcheck = false;
     taskDescription.placeholder = "Notes";
     taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
-
-
 
     form.appendChild(taskDescription);
 
@@ -33,7 +34,7 @@ function createAddTaskForm() {
     const subtaskHeading = document.createElement('h4');
     subtaskHeading.textContent = "Subtasks";
 
-    form. appendChild(subtaskHeading);
+    form.appendChild(subtaskHeading);
 
 
     const subtaskUl = document.createElement('ul');
@@ -58,6 +59,13 @@ function createAddTaskForm() {
 
     form.appendChild(submitBtn);
 
+    const projectIndex = document.createElement('input');
+    projectIndex.classList.add('projectIndex')
+    projectIndex.type = "hidden";
+    
+    projectIndex.value = 0;
+
+    form.appendChild(projectIndex);
     
     // Add text area auto height handler
     handlers.textareaAutoHeight(form);

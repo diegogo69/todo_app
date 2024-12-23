@@ -1,25 +1,35 @@
+import { PROJECTS } from "./projects.js";
+import { getFormData } from "./get_form_data";
+import { projectsToLocalStorage } from "./local_storage_handlers.js";
+import { Task } from "./task.js";
+import { Project } from "./project.js";
+import { createProjectWrapper } from "./create_project_wrapper.js";
+import { domRender } from "./domRender.js";
+import { createToolProjects } from "./create_tool_projects.js";
+
 const handlers = ( function() {
 
     // Event handling functions
     function projectSubmit(event) {
         event.preventDefault();
 
-        log("Project submit handler works fine");
-        log("LOG EVENT: ");
-        log(event.target); // Form node
-        log("it works")
+        console.log("Project submit handler works fine");
+        console.log("LOG EVENT: ");
+        console.log(event.target); // Form node
+        console.log("it works")
 
         // Retrieve data from form
-        const taskData = getProjectFormData(); // {title, description, tasks}
+        const projectData = getFormData(this); // {title, description }
         // Create project instance
-        const newProject = Project.newProject( taskData )
+        const newProject = Project.newProject( projectData )
         // Use PROJECTS.Projects instead
         PROJECTS.add(newProject);
-        log('Project added succesfully to projects array');
+        console.log('Project added succesfully to projects array');
         // Reasign new projects array in localStorage
         projectsToLocalStorage();   
         // Render projects in toolbar
-        renders.toolProjects(PROJECTS.get());
+        const toolProjects = createToolProjects(PROJECTS.get());
+        domRender.toolProjects(toolProjects);
     }
 
 
@@ -28,7 +38,7 @@ const handlers = ( function() {
         if (!projectIndex) { return }
 
         // if (event.target.matches('li')) {
-        log("EVENT CLICK ON PROJECT LIST")
+        console.log("EVENT CLICK ON PROJECT LIST")
         const project = PROJECTS.get()[+projectIndex];
         const projectWrapper = createProjectWrapper(project, projectIndex);
 
@@ -42,16 +52,16 @@ const handlers = ( function() {
     function taskSubmit(event) {
         event.preventDefault();
         // Testing logs
-        log("Task submit handler works fine");
-        log("LOG EVENT: ");
-        log(event.target); // Form node
-        log("it works")
+        console.log("Task submit handler works fine");
+        console.log("LOG EVENT: ");
+        console.log(event.target); // Form node
+        console.log("it works")
         // Extract form data
-        const taskData = getTaskFormData(this); // {title, description, subtasks, project}
+        const taskData = getFormData(this); // {title, description, subtasks, project}
         // Create task 
         const newTask = Task.newTask( taskData );
         // Add new task to default project
-        addTaskToProject(newTask, newTask.project);
+        PROJECTS.addTaskToProject(newTask, newTask.project);
         // Assign PROJECTS array to localStorage 
         projectsToLocalStorage();
 
@@ -60,7 +70,7 @@ const handlers = ( function() {
 
     // ENTER key pressed event handler. Do something or nothing on press
     // callback function for testing on enter key event
-    function sayHello() { log("HELLOOOOOOO") }
+    function sayHello() { console.log("HELLOOOOOOO") }
 
     function enterKeyPressed(event, fn) {
         // If the user presses the "Enter" key on the keyboard
@@ -78,6 +88,14 @@ const handlers = ( function() {
         fn();
     }
 
+
+    // Update the projects shown in the toolbar
+    function updateProjectWrapper(projectIndex) {
+        const project = PROJECTS.get()[projectIndex];
+        const projectWrapper = createProjectWrapper(project, projectIndex);
+        domRender.projectWrapper(projectWrapper);
+    }
+
     // Text area dynamic height
     function textareaAutoResize() {
         this.style.height = 'auto';
@@ -85,11 +103,11 @@ const handlers = ( function() {
     }
     
     function textareaAutoHeight(form) {
-        const textareas = form.querySelector('textarea');
-        for (let textarea in textareas) {
+        const textareas = form.querySelectorAll('textarea');
+        textareas.forEach(textarea => {
             textarea.addEventListener('input', textareaAutoResize);
-            textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello))
-        }
+            textarea.addEventListener("keydown", (e) => enterKeyPressed(e, sayHello))            
+        });
     }
 
     return {

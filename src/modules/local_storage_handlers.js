@@ -1,3 +1,7 @@
+import { PROJECTS } from "./projects.js";
+import { Project } from "./project.js";
+
+
 // Init local Storage
 function initLocalStorage() {
     // If no projects in localStorage
@@ -29,8 +33,8 @@ function projectsToLocalStorage() {
     // Reasign new projects array in localStorage
     localStorage.setItem('projects', projectsJSON);
 
-    log('Local Storage project reasigned succesfully');
-    log(localStorage.getItem('projects'));
+    console.log('Local Storage project reasigned succesfully');
+    console.log(localStorage.getItem('projects'));
 
 }
 
