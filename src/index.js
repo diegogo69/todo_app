@@ -12,6 +12,7 @@ import { TaskGroup } from "./modules/taskgroup.js";
 import { createAddTaskForm  } from "./modules/add_task_form.js";
 import { createAddProjectForm  } from "./modules/add_project_form.js";
 import { createToolProjects } from "./modules/create_tool_projects.js";
+import { createProjectWrapper } from "./modules/create_project_wrapper.js";
 
 import { enterKeyPressed } from "./modules/enterKeyPressed.js";
 
@@ -51,6 +52,23 @@ else {
 // -------------------- DOM STUFF -------------------------
 const editorNode = document.querySelector('.editor');
 const generalNode = document.querySelector('.general');
+
+
+generalNode.addEventListener('submit', taskSubmitHandler);
+
+
+function init() {
+    renders.toolProjects(PROJECTS.get());
+
+    const defaultProject = PROJECTS.get()[DEFAULT_PROJECT];
+    const projectWrapper = createProjectWrapper(defaultProject, DEFAULT_PROJECT);
+
+    // This code is repeated twice in this file
+    // Got to fix this
+    renders.projectWrapper(projectWrapper);
+
+}
+
 
 
 function clearNode(node) {
@@ -179,9 +197,27 @@ function textareaAutoResize() {
 }
 
 
+function toolProjectHandler(event) {
+    const projectIndex = event.target.dataset.projectIndex;
+    if (!projectIndex) { return }
+
+    // if (event.target.matches('li')) {
+    log("EVENT CLICK ON PROJECT LIST")
+    const project = PROJECTS.get()[+projectIndex];
+    const projectWrapper = createProjectWrapper(project, projectIndex);
+
+    const taskForm = projectWrapper.querySelector('.taskForm');
+    taskForm.addEventListener('submit', taskSubmitHandler);
+    renders.projectWrapper(projectWrapper);
+}
+
 // ------------ DOM RENDERING ------------
+const wrapper = document.querySelector('#tool-projects-wrapper');
+const overview = generalNode.querySelector('#overview');
+
+// Tool projects event listener
+wrapper.addEventListener('click', toolProjectHandler)
 const renders = ( function() {
-    const wrapper = document.querySelector('#tool-projects-wrapper');
 
     function toolProjects(projects) {
         clearNode(wrapper);
@@ -193,29 +229,49 @@ const renders = ( function() {
         clearNode(editorNode);
         editorNode.appendChild(form);
     }
-    return { toolProjects, editorForm, };
+
+    function projectWrapper(projectNode) {
+        clearNode(overview);
+        overview.appendChild(projectNode)
+
+    }
+    return { toolProjects, editorForm, projectWrapper, };
 } )();
 
 
 // Retrieve data from add task's form
-function getTaskFormData() {
+function getTaskFormData(taskForm) {
     // Query selectors
-    const addTaskForm = editorNode.querySelector('#addTaskForm');
-    const taskTitle = addTaskForm.querySelector('#taskTitle');
-    const taskDescription = addTaskForm.querySelector('#taskDescription');
-    const taskSubtasks = addTaskForm.querySelectorAll('.subtask');
+    // const addTaskForm = editorNode.querySelector('#addTaskForm');
+    // const taskTitle = addTaskForm.querySelector('#taskTitle');
+    // const taskDescription = addTaskForm.querySelector('#taskDescription');
+    // const taskSubtasks = addTaskForm.querySelectorAll('.subtask');
+
+    // const addTaskForm = editorNode.querySelector('#addTaskForm');
+    const taskTitle = taskForm.querySelector('.taskTitleInput');
+    const taskDescription = taskForm.querySelector('#taskDescription') || null;
+    const taskSubtasks = taskForm.querySelectorAll('.subtask') || null;
+    const projectIndex = taskForm.querySelector('#projectIndex');
+    const project = projectIndex ? projectIndex.value : DEFAULT_PROJECT;
 
     // Data extraction
-    const title = taskTitle.value;
-    const description = taskDescription.value;
-    // Reference project by index in projects array
-    const project = DEFAULT_PROJECT;
-    // Retrieve subtasks
+    const title = taskTitle.value || "Unnamed task";
     const subtasks = [];
-    taskSubtasks.forEach(task => {
-        subtasks.push(task.value);
-        log("push subtask");
-    });
+    const description = "";
+    
+    // Use a hidden input instead
+    const isDefaultTask = taskDescription && taskSubtasks;
+    
+    if (isDefaultTask) {
+        const description = taskDescription.value;
+        // Reference project by index in projects array
+        // Retrieve subtasks
+        taskSubtasks.forEach(task => {
+            subtasks.push(task.value);
+            log("push subtask");
+        });
+    }
+
 
     return {title, description, subtasks, project};
 }
@@ -231,21 +287,24 @@ function taskSubmitHandler(event) {
     log("LOG EVENT: ");
     log(event.target); // Form node
     log("it works")
-
     // Extract form data
-    const taskData = getTaskFormData(); // {title, description, subtasks, project}
-
-    // Create task instance
+    const taskData = getTaskFormData(this); // {title, description, subtasks, project}
+    // Create task 
     const newTask = Task.newTask( taskData );
-    
     // Add new task to default project
-    addTaskToProject(newTask, DEFAULT_PROJECT);
-
+    addTaskToProject(newTask, newTask.project);
     // Assign PROJECTS array to localStorage 
     projectsToLocalStorage();
 
+    updateProjectWrapper(taskData.project)
 }
 
+
+function updateProjectWrapper(projectIndex) {
+    const project = PROJECTS.get()[projectIndex];
+    const projectWrapper = createProjectWrapper(project, projectIndex);
+    renders.projectWrapper(projectWrapper);
+}
 
 // Add task to project. xd
 function addTaskToProject(task, project) {
@@ -267,3 +326,6 @@ function projectsToLocalStorage() {
     log(localStorage.getItem('projects'));
 
 }
+
+
+init();

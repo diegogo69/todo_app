@@ -1,10 +1,12 @@
 function createAddTaskForm() {
     const form = document.createElement('form');
+    form.classList.add('taskForm');
     form.id = "addTaskForm";
 
 
     const taskTitle = document.createElement('textarea');
     taskTitle.id = "taskTitle";
+    taskTitle.classList.add('taskTitleInput');
     taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
     taskTitle.autofocus = true;

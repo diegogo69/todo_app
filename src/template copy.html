@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>noted | Todo list - DiegoGo69</title>
 
-    <link rel="stylesheet" href="static/modern-normalize.css">
-    <link rel="stylesheet" href="static/styles.css">
+    <!-- <link rel="stylesheet" href="static/modern-normalize.css">
+    <link rel="stylesheet" href="static/styles.css"> -->
 </head>
 <body>
     <aside class="toolbar">
@@ -14,7 +14,7 @@
 
         <nav>
             <h2>Tasks</h2>
-            <button>Add</button>
+            <button id="addTask">Add</button>
             <ul>
                 <li>All tasks</li>
                 <li>Completed</li>
@@ -22,11 +22,13 @@
             </ul>
 
             <h2>Projects</h2>
-            <button>Add</button>
-            <ul>
-                <li>General</li>
-                <li>Todo app</li>
-            </ul>
+            <button id="addProject">Add</button>
+            <div id="tool-projects-wrapper">
+                <ul id="tool-projects">
+                    <!-- <li>General</li>
+                    <li>Todo app</li> -->
+                </ul>
+            </div>
         </nav>
 
     </aside>
@@ -37,17 +39,65 @@
             <h2>General</h2>
 
             <!-- General overview of a group of tasks -->
-             <!-- It can be a project, a list of projects, all tasks, pendents... -->
-            <div class="overview">
-                
+            <!-- It can be a project, a list of projects, all tasks, pendents... -->
+            <div id="overview">
+
+                <!-- Mostrar project -->
+                <!-- Titulo -->
+                <heading>
+                    <h2>Probar  y testear main items</h2>
+                    <p>Lista de proyecto de prueba para descripcion</p>
+                </heading>
+                <!-- quizás mostrar descripción -->
+
+
+                <!-- MOstrar tareas -->
+                <ul>
+                    <li>Probar project default</li>
+                    <li>Crear custom task y añadirlas al custom project</li>
+                </ul>
+
+                <footer>
+                    <form action="#">
+                        <input type="text" placeholder="Add task">
+                        <button type="submit">+</button>
+                    </form>
+                </footer>
 
             </div>
 
         </section>
 
-        <section class="editor">
+        <section class="workspace">
 
             <h2>Editor</h2>
+
+            <!-- Detailed view of element -->
+            <div class="editor">
+
+                <!-- Titulo -->
+                <!-- <h3>Crear custom task y añadirlas al custom project</h3> -->
+                <textarea name="taskTitle" id="taskTitle" spellcheck="false" >Crear custom task y añadirlas al custom project</textarea>
+                
+
+                <!-- Description o notas -->
+                <textarea name="taskDescription" id="taskDescription" spellcheck="false" >Prueba y test de añadir notas/descripción a tarea</textarea>
+                <!-- <p>Prueba y test de añadir notas/descripción a tarea</p> -->
+
+                <!-- Subtareas o checklist -->
+                <h4>Subtareas</h4>
+
+                <ul>
+                    <!-- <li id="contentEdit" contenteditable="true">crear subtarea numero uno</li> -->
+                    <li><textarea class="subtask" rows="1">crear subtarea numero uno</textarea></li>
+                    <li><textarea class="subtask" rows="1">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</textarea></li>
+                    <li><textarea class="subtask" rows="1">Lorem ipsum dolor sit amet consectetur.</textarea></li>
+                </ul>
+
+                
+            </div>
+
+
 
         </section>
     </main>
