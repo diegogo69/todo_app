@@ -25,8 +25,15 @@ const PROJECTS = ( function() {
         }
     }
 
+    // Add task to project. xd
+    function addTaskToProject(task, projectIndex) {
+        projects[projectIndex]["tasks"].push(task);
+        log('Task added to default project SUCCESSFULLY');
+    }
+
+
     // make projects private
-    return { get, set, add, remove, };
+    return { get, set, add, remove, addTaskToProject};
 
 })();
 

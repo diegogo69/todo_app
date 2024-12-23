@@ -1,7 +1,11 @@
+import { handlers } from ".modules/event_handlers.js";
+
 function createAddTaskForm() {
     const form = document.createElement('form');
     form.classList.add('taskForm');
     form.id = "addTaskForm";
+    // On submit event listener
+    form.addEventListener('submit', handlers.taskSubmit);
 
 
     const taskTitle = document.createElement('textarea');
@@ -52,8 +56,11 @@ function createAddTaskForm() {
     submitBtn.type = "submit";
     submitBtn.textContent = "Add";
 
-
     form.appendChild(submitBtn);
+
+    
+    // Add text area auto height handler
+    handlers.textareaAutoHeight(form);
 
 
     return form;
