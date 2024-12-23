@@ -1,32 +1,32 @@
+// PROJECTS MODULE
 const PROJECTS = ( function() {
 
     // List of projects
-    let projects = [];
+    let projects;
+
+    function set(value) {
+        projects = value;
+    }
+
+    function get() {
+        return projects;
+    }
 
     // Add project from projects
-    function addProject(project) {
+    function add(project) {
         projects.push(project);
     }
 
     // Remove project from projects
-    function removeProject(project) {
+    function remove(project) {
         let index = projects.indexOf(project);
         if (index > -1) {
             projects.splice(index, 1);
         }
     }
 
-    function getProjects() {
-        // Copy of list of projects array
-        let arr = [];
-        for (let project of projects) {
-            arr.push(project);
-        }
-        return arr;
-    }
-
     // make projects private
-    return { projects, addProject, removeProject, getProjects };
+    return { get, set, add, remove, };
 
 })();
 

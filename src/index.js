@@ -29,27 +29,22 @@ localStorage.clear();
 // Init local Storage
 // If no projects in localStorage
 if(!localStorage.getItem('projects')) {
-
     // Set PROJECTS.projects to empty
-    PROJECTS.projects = [];
-
+    PROJECTS.set(new Array());
     // Create default project
     const defProject = Project.newProject({title: "Default"});
-
     // Add default project
-    PROJECTS.projects.push(defProject);
-    
-    // Stringify array for projects in local storage
-    // let projects = JSON.stringify([]);
-    const projectsJSON = JSON.stringify([PROJECTS.projects]);
-    localStorage.setItem('projects', projectsJSON);
+    PROJECTS.add(defProject);
+    // PROJECTS.projects.push(defProject);
+    // Assign PROJECTS array to localStorage 
+    projectsToLocalStorage();
 } 
 // If projects in local storage
 else {
     // Parse local storage projects into PROJECTS.projects
-    PROJECTS.projects = JSON.parse(localStorage.getItem('projects'));
+    const projectsParsed = JSON.parse(localStorage.getItem('projects'));
+    PROJECTS.set(projectsParsed);
 }
-
 
 
 
@@ -73,28 +68,18 @@ addTaskBtn.addEventListener('click', displayTaskForm);
 function displayTaskForm() {
     // Creeate form
     const addTaskForm = createAddTaskForm();
-
     // Render form
-    // clearNode(editorNode);
-    // editorNode.appendChild(addTaskForm);
     renders.editorForm(addTaskForm);
-
+    // On submit event listener
+    // const submitBtn = document.querySelector('#addTaskForm');
+    addTaskForm.addEventListener('submit', taskSubmitHandler)
     // Textareas dynamic height on form
     textareaDynamicHeight(addTaskForm);
-
-    // On submit event listener
-
-    const submitBtn = document.querySelector('#addTaskForm');
-    submitBtn.addEventListener('submit', taskSubmitHandler)
-
     // Autofocus
-    editorNode.querySelector('#taskTitle').focus()
-    
+    // editorNode.querySelector('#taskTitle').focus()
+    addTaskForm.querySelector('#taskTitle').focus()
 }
 
-function taskFromForm() {
-
-}
 
 // Add project form
 const addProjectBtn = document.querySelector('#addProject');
@@ -105,44 +90,38 @@ addProjectBtn.addEventListener('click', displayProjectForm);
 function displayProjectForm() {
     // Create add project form
     const addProjectForm = createAddProjectForm();
-
-    // clearNode(editorNode);
-    // editorNode.appendChild(addProjectForm);
+    // Render add project's project form
     renders.editorForm(addProjectForm)
-
+    // const submitBtn = document.querySelector('#addProjectForm');
+    addProjectForm.addEventListener('submit', projectSubmitHandler)
     // Textareas dynamic height on form
     textareaDynamicHeight(addProjectForm);
-
-    const submitBtn = document.querySelector('#addProjectForm');
-    submitBtn.addEventListener('submit', projectSubmitHandler)
-
-
-    function projectSubmitHandler(event) {
-        event.preventDefault();
-
-        log("Project submit handler works fine");
-        log("LOG EVENT: ");
-        log(event.target); // Form node
-        log("it works")
-
-        // Retrieve data from form
-        const taskData = getProjectFormData(); // {title, description, tasks}
-        // Create project instance
-        const newProject = Project.newProject( taskData )
-        // Use PROJECTS.Projects instead
-        PROJECTS.addProject(newProject);
-        log('Project added succesfully to projects array');
-        // Reasign new projects array in localStorage
-        projectsToLocalStorage();   
-        // Render projects in toolbar
-        renders.toolProjects(PROJECTS.projects);
-    }
-
     // Autofocus
-    editorNode.querySelector('#projectTitle').focus()
-    
+    // editorNode.querySelector('#projectTitle').focus()
+    addProjectForm.querySelector('#projectTitle').focus()
 }
 
+
+function projectSubmitHandler(event) {
+    event.preventDefault();
+
+    log("Project submit handler works fine");
+    log("LOG EVENT: ");
+    log(event.target); // Form node
+    log("it works")
+
+    // Retrieve data from form
+    const taskData = getProjectFormData(); // {title, description, tasks}
+    // Create project instance
+    const newProject = Project.newProject( taskData )
+    // Use PROJECTS.Projects instead
+    PROJECTS.add(newProject);
+    log('Project added succesfully to projects array');
+    // Reasign new projects array in localStorage
+    projectsToLocalStorage();   
+    // Render projects in toolbar
+    renders.toolProjects(PROJECTS.get());
+}
 
 
 function getProjectFormData() {
@@ -270,16 +249,16 @@ function taskSubmitHandler(event) {
 
 // Add task to project. xd
 function addTaskToProject(task, project) {
-    PROJECTS.projects[project]["tasks"].push(task);
+    const projects = PROJECTS.get();
+    projects[project]["tasks"].push(task);
     log('Task added to default project SUCCESSFULLY');
-
 }
 
 
 // Assign PROJECTS array to localStorage 
 function projectsToLocalStorage() {
     // Stringify projects array
-    const projectsJSON = JSON.stringify([PROJECTS.projects]);
+    const projectsJSON = JSON.stringify(PROJECTS.get());
     
     // Reasign new projects array in localStorage
     localStorage.setItem('projects', projectsJSON);
