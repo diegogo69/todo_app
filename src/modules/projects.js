@@ -25,6 +25,11 @@ const PROJECTS = ( function() {
         }
     }
 
+    // Index of some project within the array
+    function indexOf(project) {
+        return projects.indexOf(project);
+    }
+
     // Add task to project. xd
     function addTaskToProject(task, projectIndex) {
         projects[projectIndex]["tasks"].push(task);
@@ -33,7 +38,10 @@ const PROJECTS = ( function() {
 
 
     // make projects private
-    return { get, set, add, remove, addTaskToProject};
+    return {
+        get, set, add, remove,
+        addTaskToProject, indexOf,
+    };
 
 })();
 

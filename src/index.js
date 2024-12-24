@@ -74,10 +74,7 @@ function init() {
     const defaultProject = PROJECTS.get()[DEFAULT_PROJECT];
     const projectWrapper = createProjectWrapper(defaultProject, DEFAULT_PROJECT);
 
-    // This code is repeated twice in this file
-    // Got to fix this
-    domRender.projectWrapper(projectWrapper);
-
+    domRender.projectWrapper(projectWrapper); 
 }
 
 init();

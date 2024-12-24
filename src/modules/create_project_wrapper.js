@@ -46,7 +46,7 @@ function createProjectWrapper(project, index) {
 
     const projectIndex = document.createElement('input');
     projectIndex.type = "hidden";
-    projectIndex.id = "projectIndex";
+    projectIndex.classList.add('projectIndex');
     projectIndex.value = index;    
 
     const newTaskBtn = document.createElement('button');

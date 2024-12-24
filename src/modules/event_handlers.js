@@ -30,6 +30,7 @@ const handlers = ( function() {
         // Render projects in toolbar
         const toolProjects = createToolProjects(PROJECTS.get());
         domRender.toolProjects(toolProjects);
+        displayProjectWrapper(newProject);
     }
 
 
@@ -39,12 +40,7 @@ const handlers = ( function() {
 
         // if (event.target.matches('li')) {
         console.log("EVENT CLICK ON PROJECT LIST")
-        const project = PROJECTS.get()[+projectIndex];
-        const projectWrapper = createProjectWrapper(project, projectIndex);
-
-        const taskForm = projectWrapper.querySelector('.taskForm');
-        taskForm.addEventListener('submit', taskSubmit);
-        renders.projectWrapper(projectWrapper);
+        displayProjectWrapper(projectIndex);
     }
 
 
@@ -65,7 +61,7 @@ const handlers = ( function() {
         // Assign PROJECTS array to localStorage 
         projectsToLocalStorage();
 
-        updateProjectWrapper(taskData.project)
+        displayProjectWrapper(taskData.project);
     }
 
     // ENTER key pressed event handler. Do something or nothing on press
@@ -90,8 +86,22 @@ const handlers = ( function() {
 
 
     // Update the projects shown in the toolbar
-    function updateProjectWrapper(projectIndex) {
-        const project = PROJECTS.get()[projectIndex];
+    function displayProjectWrapper(project) {
+        // project might be an index or a Project obj
+        const isProjectObj = project instanceof Project;
+        let projectIndex;
+        
+        // If arg is not a project obj. but an index
+        if (isProjectObj) {
+            // reassign variable from index to respective project obj
+            projectIndex = PROJECTS.indexOf(project);
+        }
+        
+        else {
+            projectIndex = project;
+            project = PROJECTS.get()[projectIndex];
+        }
+        
         const projectWrapper = createProjectWrapper(project, projectIndex);
         domRender.projectWrapper(projectWrapper);
     }
