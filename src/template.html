@@ -9,25 +9,34 @@
     <link rel="stylesheet" href="static/styles.css"> -->
 </head>
 <body>
+    <header>
+        noted
+    </header>
     <aside class="toolbar">
-        <h1>noted</h1>
-
         <nav>
-            <h2>Tasks</h2>
-            <button id="addTask">Add</button>
-            <ul>
-                <li>All tasks</li>
-                <li>Completed</li>
-                <li>Pendent</li>
-            </ul>
-
-            <h2>Projects</h2>
-            <button id="addProject">Add</button>
-            <div id="tool-projects-wrapper">
-                <ul id="tool-projects">
-                    <!-- <li>General</li>
-                    <li>Todo app</li> -->
+            <div class="nav-tasks">
+                <div class="nav-header">
+                    <h2>Tasks</h2>
+                    <button id="addTask">Add</button>
+                </div>
+                <ul>
+                    <li>All tasks</li>
+                    <li>Completed</li>
+                    <li>Pendent</li>
                 </ul>
+            </div>
+
+            <div class="nav-projects">
+                <div class="nav-header">
+                    <h2>Projects</h2>
+                    <button id="addProject">Add</button>
+                </div>
+                <div id="tool-projects-wrapper">
+                    <ul id="tool-projects">
+                        <!-- <li>General</li>
+                        <li>Todo app</li> -->
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -36,45 +45,11 @@
     <main>
         <section class="general">
 
-            <h2>General</h2>
 
-            <!-- General overview of a group of tasks -->
-            <!-- It can be a project, a list of projects, all tasks, pendents... -->
-            <div id="overview">
-            </div>
 
         </section>
 
-        <section class="workspace">
-
-            <h2>Editor</h2>
-
-            <!-- Detailed view of element -->
-            <div class="editor">
-
-                <!-- Titulo -->
-                <!-- <h3>Crear custom task y añadirlas al custom project</h3> -->
-                <textarea name="taskTitle" id="taskTitle" spellcheck="false" >Crear custom task y añadirlas al custom project</textarea>
-                
-
-                <!-- Description o notas -->
-                <textarea name="taskDescription" id="taskDescription" spellcheck="false" >Prueba y test de añadir notas/descripción a tarea</textarea>
-                <!-- <p>Prueba y test de añadir notas/descripción a tarea</p> -->
-
-                <!-- Subtareas o checklist -->
-                <h4>Subtareas</h4>
-
-                <ul>
-                    <!-- <li id="contentEdit" contenteditable="true">crear subtarea numero uno</li> -->
-                    <li><textarea class="subtask" rows="1">crear subtarea numero uno</textarea></li>
-                    <li><textarea class="subtask" rows="1">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</textarea></li>
-                    <li><textarea class="subtask" rows="1">Lorem ipsum dolor sit amet consectetur.</textarea></li>
-                </ul>
-
-                
-            </div>
-
-
+        <section class="editor">
 
         </section>
     </main>

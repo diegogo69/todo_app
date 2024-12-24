@@ -13,9 +13,9 @@ function createAddTaskForm() {
     // taskTitle.id = "taskTitle";
     // taskTitle.classList.add('taskTitleInput');
     taskTitle.classList.add('formTitle');
+    taskTitle.rows = 1;
     taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
-    taskTitle.autofocus = true;
     taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
 

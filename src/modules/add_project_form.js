@@ -9,11 +9,10 @@ function createAddProjectForm() {
 
 
     const projectTitle = document.createElement('textarea');
-    // projectTitle.id = "projectTitle";
+    projectTitle.rows = 1;
     projectTitle.classList.add('formTitle');
     projectTitle.spellcheck = false;
     projectTitle.placeholder = "Add new project..."
-    projectTitle.autofocus = true;
     projectTitle.value = "TITLE FOR DOM NEWLY CREATED PROJECT YEIII";
 
 

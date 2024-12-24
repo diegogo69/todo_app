@@ -1,45 +1,167 @@
+* {
+    /* outline: 2px solid red; */
+    padding: 0;
+    margin: 0;
+}
+
 svg {
     width: 24px;
 }
 
-textarea {
-    display: block;
-    resize: none;
-    overflow: hidden;
-    width: 100%;
-    max-height: 8lh;
-    outline: none;
-    border: none;
-    background-color: transparent;
-}
-
-/* Improve maybe use classes */
-textarea#taskTitle,
-textarea#projectTitle {
-    font-size: 1.2rem;
-    font-weight: 900;
+ul {
+    list-style: none;
 }
 
 
 body {
-    display: flex;
+
+    --bg: hsl(210, 0%, 99%);
+    --dark: hsl(217, 40%, 15%);
+    --primary: #38bdf8;
+
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    grid-template-rows: 2.8rem 1fr;
+    grid-template-areas:
+        "header header"
+        "aside main";
     height: 100vh;
+    background-color: var(--bg);
+    color: var(--dark);
 }
 
+header {
+    grid-area: header;
+    display: grid;
+    place-content: center;
+    border-bottom: 2px solid lightgrey;
+
+    font-weight: 900;
+    text-decoration: line-through;
+    font-size: 1.2rem;
+}
 
 aside {
-    width: 14rem;
+    grid-area: aside;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+
+.nav-tasks,
+.nav-projects {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+nav .nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 main {
+    grid-area: main;
+
     display: flex;
     flex: 1;
 }
 
 .general {
     flex: 1;
+    padding: 1rem;
+
 }
 
-.workspace {
+.project-wrapper {
+    height: 100%;
+    display: flex;
+    gap: .8rem;
+    flex-direction: column;
+}
+
+    /* padding for everything but header
+    .project-wrapper > * + * {
+        padding: .8rem;
+    } */
+
+.project-wrapper form {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center;  */
+}
+
+.project-wrapper form input {
     flex: 1;
+    border-radius: 1rem;
+}
+
+.project-wrapper form button {
+    padding: .2rem .8rem;
+
+}
+
+.tasks-wrapper {
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.tasks-wrapper ul {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.editor {
+    flex: 1;
+    padding: 1rem;
+}
+
+.editor form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formTitle {
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.formTitle::placeholder {
+    font-weight: 400;
+}
+
+textarea {
+    display: block;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+
+    max-height: 8lh;
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: .4rem;
+    background-color: transparent;
+    padding: .4rem .8rem
+}
+
+input[type="text"] {
+    padding: .4rem .8rem
 }

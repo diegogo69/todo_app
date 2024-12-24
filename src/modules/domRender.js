@@ -1,6 +1,6 @@
 const domRender = ( function() {
     const editorNode = document.querySelector('.editor');
-    const overviewNode = document.querySelector('#overview');
+    const generalNode = document.querySelector('.general');
     const toolProjectsNode = document.querySelector('#tool-projects-wrapper');
 
     function toolProjects(projectsUl) {
@@ -11,11 +11,12 @@ const domRender = ( function() {
     function editorForm(form) {
         clearNode(editorNode);
         editorNode.appendChild(form);
+        editorNode.querySelector('.formTitle').focus();
     }
 
     function projectWrapper(projectNode) {
-        clearNode(overviewNode);
-        overview.appendChild(projectNode)
+        clearNode(generalNode);
+        generalNode.appendChild(projectNode)
 
     }
 

@@ -18,6 +18,7 @@ function createProjectWrapper(project, index) {
 
 
     const tasksWrapper = document.createElement('div');
+    tasksWrapper.classList.add('tasks-wrapper');
     const tasksUl = document.createElement('ul');
 
     for (let task of project.tasks) {
