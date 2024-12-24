@@ -35,7 +35,8 @@ const handlers = ( function() {
 
 
     function toolProject(event) {
-        const projectIndex = event.target.dataset.projectIndex;
+        const li = event.target.closest('li');
+        const projectIndex = li.dataset.projectIndex;
         if (!projectIndex) { return }
 
         // if (event.target.matches('li')) {
