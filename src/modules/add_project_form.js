@@ -20,7 +20,7 @@ function createAddProjectForm() {
 
     const projectDescription = document.createElement('textarea');
     // projectDescription.id = "projectDescription";
-    projectDescription.classList.add('formTitle');
+    projectDescription.classList.add('formDescription');
     projectDescription.spellcheck = false;
     projectDescription.placeholder = "description";
     projectDescription.value = "DESCRIPTION FOR DOM NEWLY PROJECT CREATED BBBBB";
