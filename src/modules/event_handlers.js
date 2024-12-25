@@ -6,6 +6,7 @@ import { Project } from "./project.js";
 import { createProjectWrapper } from "./create_project_wrapper.js";
 import { domRender } from "./domRender.js";
 import { createToolProjects } from "./create_tool_projects.js";
+import { createTaskWrapper } from "./create_task_wrapper.js";
 
 const handlers = ( function() {
 
@@ -20,6 +21,8 @@ const handlers = ( function() {
 
         // Retrieve data from form
         const projectData = getFormData(this); // {title, description }
+        // Empty form
+        this.reset();
         // Create project instance
         const newProject = Project.newProject( projectData )
         // Use PROJECTS.Projects instead
@@ -34,17 +37,6 @@ const handlers = ( function() {
     }
 
 
-    function toolProject(event) {
-        const li = event.target.closest('li');
-        const projectIndex = li.dataset.projectIndex;
-        if (!projectIndex) { return }
-
-        // if (event.target.matches('li')) {
-        console.log("EVENT CLICK ON PROJECT LIST")
-        displayProjectWrapper(projectIndex);
-    }
-
-
     // TASK SUBMIT FUNCTION HANDLER
     function taskSubmit(event) {
         event.preventDefault();
@@ -55,6 +47,8 @@ const handlers = ( function() {
         console.log("it works")
         // Extract form data
         const taskData = getFormData(this); // {title, description, subtasks, project}
+        // Empty form
+        this.reset();
         // Create task 
         const newTask = Task.newTask( taskData );
         // Add new task to default project
@@ -64,6 +58,38 @@ const handlers = ( function() {
 
         displayProjectWrapper(taskData.project);
     }
+
+
+    function toolProject(event) {
+        const li = event.target.closest('li');
+        const projectIndex = li.dataset.projectIndex;
+        if (!projectIndex) { return }
+
+        // if (event.target.matches('li')) {
+        console.log("EVENT CLICK ON PROJECT LIST")
+        displayProjectWrapper(projectIndex);
+    }
+
+    function taskCompleted(event) {
+        const icon = event.currentTarget;
+        const taskLi = icon.closest('.task-item');
+        const taskProjectIndex = taskLi.dataset.taskProjectIndex;
+        
+        const projectWrapper = this.closest('.project-wrapper');
+        const projectIndex = projectWrapper.dataset.projectIndex;
+
+        // Mark complete
+        const completed = PROJECTS.taskCompleted(taskProjectIndex, projectIndex);
+        if (completed) {
+            taskLi.classList.add('completed');
+            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle</title><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+        } else {
+            taskLi.classList.remove('completed');
+            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-blank-circle-outline</title><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+        }
+
+    }
+
 
     // ENTER key pressed event handler. Do something or nothing on press
     // callback function for testing on enter key event
@@ -107,6 +133,26 @@ const handlers = ( function() {
         domRender.projectWrapper(projectWrapper);
     }
 
+
+    function displayTaskWrapper(event) {
+        const target = event.target;
+
+        // If the click was on the complete check. do nohing
+        const isCheckComplete = target.tagName == "path" || target.tagName == "svg";
+        if ( isCheckComplete ) return;
+
+
+        const taskItem = event.currentTarget;
+        const taskIndex = taskItem.dataset.taskProjectIndex;
+        const projectWrapper = taskItem.closest(".project-wrapper");
+        const projectIndex = projectWrapper.dataset.projectIndex;
+
+        const task = PROJECTS.getTask(taskIndex, projectIndex)
+        const taskWrapper = createTaskWrapper(task);
+        domRender.editorForm(taskWrapper);
+        
+    }
+
     // Text area dynamic height
     function textareaAutoResize() {
         this.style.height = 'auto';
@@ -123,7 +169,7 @@ const handlers = ( function() {
 
     return {
         projectSubmit, toolProject, taskSubmit,
-        textareaAutoHeight
+        textareaAutoHeight, taskCompleted, displayTaskWrapper
     }
 } )();
 

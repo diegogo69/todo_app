@@ -17,8 +17,8 @@ const domRender = ( function() {
     function projectWrapper(projectNode) {
         clearNode(generalNode);
         generalNode.appendChild(projectNode)
-
     }
+
 
     function clearNode(node) {
         while (node.firstChild) {
