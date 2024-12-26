@@ -53,7 +53,13 @@ function getFormData(form) {
         //     tasks.push(projectTask.value);
         //     console.log("push subproject")
         // }
-        return {title, description};        
+        const projectIndexNode = form.querySelector('.project-index')
+        let projectIndex = null;
+        
+        if (projectIndexNode) { projectIndex = projectIndexNode.value };
+
+        
+        return {title, description, projectIndex};        
     }
 }
 

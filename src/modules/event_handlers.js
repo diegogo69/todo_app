@@ -38,6 +38,28 @@ const handlers = ( function() {
         displayProjectWrapper(newProject);
     }
 
+    // Edit project data
+    function projectUpdate(event) {
+        event.preventDefault();
+
+        // Testing logs
+        console.log("Task update handler works fine");
+        console.log("LOG EVENT: ");
+        console.log(event.target); // Form node
+        console.log("it works")
+
+        const projectData = getFormData(this);
+
+        const project = PROJECTS.get()[projectData.projectIndex];
+        project.updateData(projectData);
+        console.log(`Project data update succesfully`);
+
+        todoLocalstorage.update.projects();
+        displayProjectWrapper(project);
+        const toolProjects = createToolProjects(PROJECTS.get());
+        domRender.toolProjects(toolProjects);
+    }
+
 
     // TASK SUBMIT FUNCTION HANDLER
     function taskSubmit(event) {
@@ -145,7 +167,7 @@ const handlers = ( function() {
         console.log("EVENT CLICK ON PROJECT LIST");
         const project = PROJECTS.get()[projectIndex];
         displayProjectWrapper(project);
-        const projectSummary = createProjectSummary(project);
+        const projectSummary = createProjectSummary(project, projectIndex);
         domRender.editorForm(projectSummary);
     }
 
@@ -193,7 +215,7 @@ const handlers = ( function() {
     }
 
 
-    function displayTaskWrapper(event) {
+    function displayTaskSummary(event) {
         const target = event.target;
 
         // If the click was on the complete check. do nohing
@@ -230,8 +252,8 @@ const handlers = ( function() {
 
     return {
         projectSubmit, toolProject, taskSubmit,
-        textareaAutoHeight, taskCompleted, displayTaskWrapper,
-        taskUpdate, taskRemove,
+        textareaAutoHeight, taskCompleted, displayTaskSummary,
+        taskUpdate, taskRemove, projectUpdate,
     }
 } )();
 
