@@ -10,7 +10,7 @@ function createAddProjectForm() {
 
     const projectTitle = document.createElement('textarea');
     projectTitle.rows = 1;
-    projectTitle.classList.add('formTitle');
+    projectTitle.classList.add('form-title');
     projectTitle.spellcheck = false;
     projectTitle.placeholder = "Add new project..."
     projectTitle.value = "TITLE FOR DOM NEWLY CREATED PROJECT YEIII";
@@ -20,7 +20,7 @@ function createAddProjectForm() {
 
     const projectDescription = document.createElement('textarea');
     // projectDescription.id = "projectDescription";
-    projectDescription.classList.add('formDescription');
+    projectDescription.classList.add('form-description');
     projectDescription.spellcheck = false;
     projectDescription.placeholder = "description";
     projectDescription.value = "DESCRIPTION FOR DOM NEWLY PROJECT CREATED BBBBB";

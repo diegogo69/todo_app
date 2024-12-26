@@ -12,7 +12,7 @@ function createAddTaskForm() {
     const taskTitle = document.createElement('textarea');
     // taskTitle.id = "taskTitle";
     // taskTitle.classList.add('taskTitleInput');
-    taskTitle.classList.add('formTitle');
+    taskTitle.classList.add('form-title');
     taskTitle.rows = 1;
     taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
@@ -23,7 +23,7 @@ function createAddTaskForm() {
 
     const taskDescription = document.createElement('textarea');
     // taskDescription.id = "taskDescription";
-    taskDescription.classList.add('formDescription');
+    taskDescription.classList.add('form-description');
     taskDescription.spellcheck = false;
     taskDescription.placeholder = "Notes";
     taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
@@ -60,7 +60,7 @@ function createAddTaskForm() {
     form.appendChild(submitBtn);
 
     const projectIndex = document.createElement('input');
-    projectIndex.classList.add('projectIndex')
+    projectIndex.classList.add('project-index')
     projectIndex.type = "hidden";
     
     projectIndex.value = 0;

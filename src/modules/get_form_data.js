@@ -1,8 +1,8 @@
 function getFormData(form) {
     const formType = form.dataset.formType;
 
-    const formTitle = form.querySelector('.formTitle');
-    const formDescription = form.querySelector('.formDescription');
+    const formTitle = form.querySelector('.form-title');
+    const formDescription = form.querySelector('.form-description');
 
     // There will always be a title form control
     const title = formTitle.value || `Unnamed ${formType}`;
@@ -16,7 +16,7 @@ function getFormData(form) {
     // IF IT'S A TASK FORM
     if (formType === "task") {
         const formSubtasks = form.querySelectorAll('.subtask');
-        const formProjectIndex = form.querySelector('.projectIndex');
+        const formProjectIndex = form.querySelector('.project-index');
         
         let project = 0;
         // If hidden input for project Index

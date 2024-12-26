@@ -11,7 +11,7 @@ const domRender = ( function() {
     function editorForm(form) {
         clearNode(editorNode);
         editorNode.appendChild(form);
-        editorNode.querySelector('.formTitle').focus();
+        editorNode.querySelector('.form-title').focus();
     }
 
     function projectWrapper(projectNode) {
