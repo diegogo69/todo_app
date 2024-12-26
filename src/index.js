@@ -8,7 +8,7 @@ import { Project } from "./modules/project.js";
 import { Task } from "./modules/task.js";
 import { Subtask } from "./modules/subtask.js";
 import { TaskGroup } from "./modules/taskgroup.js";
-import { initLocalStorage, projectsToLocalStorage } from "./modules/local_storage_handlers.js";
+import { todoLocalstorage } from "./modules/local_storage_handler.js";
 
 // DOM render
 import { domRender } from "./modules/domRender.js";
@@ -68,7 +68,7 @@ function displayToolProjects() {
 }
 
 function init() {
-    initLocalStorage();
+    todoLocalstorage.init();
     displayToolProjects();
 
     const defaultProject = PROJECTS.get()[DEFAULT_PROJECT];

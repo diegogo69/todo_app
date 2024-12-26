@@ -1,6 +1,7 @@
 import { PROJECTS } from "./projects.js";
+import { TASKS } from "./tasks";
 import { getFormData } from "./get_form_data";
-import { projectsToLocalStorage } from "./local_storage_handlers.js";
+import { todoLocalstorage } from "./local_storage_handler.js";
 import { Task } from "./task.js";
 import { Project } from "./project.js";
 import { createProjectWrapper } from "./create_project_wrapper.js";
@@ -29,7 +30,7 @@ const handlers = ( function() {
         PROJECTS.add(newProject);
         console.log('Project added succesfully to projects array');
         // Reasign new projects array in localStorage
-        projectsToLocalStorage();   
+        todoLocalstorage.update.projects();   
         // Render projects in toolbar
         const toolProjects = createToolProjects(PROJECTS.get());
         domRender.toolProjects(toolProjects);
@@ -51,10 +52,14 @@ const handlers = ( function() {
         this.reset();
         // Create task 
         const newTask = Task.newTask( taskData );
+        // Add task to tasks array handler. Store it's index
+        const newTaskIndex = TASKS.add(newTask);
+        console.log(`New task added to TASKS array on index ${newTaskIndex}`);
+
         // Add new task to default project
         PROJECTS.addTaskToProject(newTask, newTask.project);
         // Assign PROJECTS array to localStorage 
-        projectsToLocalStorage();
+        todoLocalstorage.update.projects();
 
         displayProjectWrapper(taskData.project);
     }
