@@ -11,18 +11,18 @@ class Task {
         this.completed = false; // boolean
     }
 
-    addTaskgroup(taskgroup) {
-        this.taskgroup = taskgroup;
-    }
-
     // STATIC METHODS
 
     static newTask( {title, project, dueDate, priority, subtasks, description, taskgroup} ) {
         let task = new Task( {title, project, dueDate, priority, subtasks, description, taskgroup} );
         return task // Optimize
     }
-
+    
     // REGULAR METHODS
+
+    addTaskgroup(taskgroup) {
+        this.taskgroup = taskgroup;
+    }
 
     // ---- TITLE ----
 
@@ -102,6 +102,13 @@ class Task {
     // --- COMPLETE ---
     setComplete(completed) {
         this.completed = completed;
+    }
+
+    // Update data
+    updateData( data ) {
+        for (let key in data) {
+            this[key] = data[key];
+        }
     }
 
 }

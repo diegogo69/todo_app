@@ -34,7 +34,13 @@ function getFormData(form) {
             }
         }
 
-        return {title, description, subtasks, project};
+        const taskIndexNode = form.querySelector('.taskIndex')
+        let taskIndex = null;
+        
+        if (taskIndexNode) { taskIndex = taskIndexNode.value };
+
+
+        return {title, description, subtasks, project, taskIndex, };
     }
 
     // IF IT'S A PROJECT FORM

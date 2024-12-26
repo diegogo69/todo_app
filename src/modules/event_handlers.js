@@ -65,6 +65,33 @@ const handlers = ( function() {
     }
 
 
+        // TASK SUBMIT FUNCTION HANDLER
+        function taskUpdate(event) {
+            event.preventDefault();
+            // Testing logs
+            console.log("Task update handler works fine");
+            console.log("LOG EVENT: ");
+            console.log(event.target); // Form node
+            console.log("it works")
+            // Extract form data
+            const taskData = getFormData(this); // {title, description, subtasks, project}
+            // Empty form
+            this.reset();
+
+            // Reference task from tasks arr via taskIndex
+            const task = TASKS.get()[taskData.taskIndex];
+            // Update task data
+            task.updateData(taskData);
+            console.log(`Task data update succesfully`);
+    
+            // Update local storage
+            todoLocalstorage.update.tasks();
+    
+            displayProjectWrapper(taskData.project);
+        }
+    
+
+
     function toolProject(event) {
         const li = event.target.closest('li');
         const projectIndex = li.dataset.projectIndex;
@@ -148,12 +175,14 @@ const handlers = ( function() {
 
 
         const taskItem = event.currentTarget;
-        const taskIndex = taskItem.dataset.taskProjectIndex;
+        const taskProjectIndex = taskItem.dataset.taskProjectIndex;
         const projectWrapper = taskItem.closest(".project-wrapper");
         const projectIndex = projectWrapper.dataset.projectIndex;
 
-        const task = PROJECTS.getTask(taskIndex, projectIndex)
-        const taskWrapper = createTaskWrapper(task);
+        const task = PROJECTS.getTask(taskProjectIndex, projectIndex)
+        const taskIndex = TASKS.indexOf(task);
+        
+        const taskWrapper = createTaskWrapper(task, taskIndex);
         domRender.editorForm(taskWrapper);
         
     }
@@ -174,7 +203,8 @@ const handlers = ( function() {
 
     return {
         projectSubmit, toolProject, taskSubmit,
-        textareaAutoHeight, taskCompleted, displayTaskWrapper
+        textareaAutoHeight, taskCompleted, displayTaskWrapper,
+        taskUpdate,
     }
 } )();
 

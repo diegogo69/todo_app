@@ -1,12 +1,12 @@
 import { handlers } from "./event_handlers.js";
 
-function createTaskWrapper(task) {
+function createTaskWrapper(task, taskIndex) {
     const form = document.createElement('form');
     form.classList.add('taskForm');
     // form.id = "addTaskForm";
     form.dataset.formType = "task";
     // On submit event listener
-    // form.addEventListener('submit', handlers.taskSubmit);
+    form.addEventListener('submit', handlers.taskUpdate);
 
 
     const taskTitle = document.createElement('textarea');
@@ -41,7 +41,7 @@ function createTaskWrapper(task) {
 
 
     for (let i = 0; i <= task.subtasks.length; i++ ) {
-        const lastIteration = i === task.subtasks.length;
+        const lastIteration = (i === task.subtasks.length);
 
         const subtaskLi = document.createElement('li');
         const subtask = document.createElement('textarea');
@@ -63,12 +63,28 @@ function createTaskWrapper(task) {
 
 
     const projectIndex = document.createElement('input');
-    projectIndex.classList.add('projectIndex')
     projectIndex.type = "hidden";
-    
+    projectIndex.classList.add('projectIndex')
     projectIndex.value = task.project;
-
+    
     form.appendChild(projectIndex);
+    
+
+    const taskIndexNode = document.createElement('input');
+    taskIndexNode.type = 'hidden';
+    taskIndexNode.classList.add('taskIndex');
+    taskIndexNode.value = taskIndex;
+
+    form.appendChild(taskIndexNode);
+    
+
+    const submitBtn = document.createElement('button');
+    submitBtn.id = "submitBtn"
+    submitBtn.type = "submit";
+    submitBtn.textContent = "Add";
+
+    form.appendChild(submitBtn);
+
     
     // Add text area auto height handler
     handlers.textareaAutoHeight(form);
