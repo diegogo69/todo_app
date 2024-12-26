@@ -1,6 +1,6 @@
 import { handlers } from "./event_handlers.js";
 
-function createTaskWrapper(task, taskIndex) {
+function createTaskSummary(task, taskIndex) {
     const form = document.createElement('form');
     form.classList.add('taskForm');
     // form.id = "addTaskForm";
@@ -93,4 +93,4 @@ function createTaskWrapper(task, taskIndex) {
     return form;
 }
 
-export { createTaskWrapper }
+export { createTaskSummary }

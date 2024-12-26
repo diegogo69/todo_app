@@ -7,7 +7,8 @@ import { Project } from "./project.js";
 import { createProjectWrapper } from "./create_project_wrapper.js";
 import { domRender } from "./domRender.js";
 import { createToolProjects } from "./create_tool_projects.js";
-import { createTaskWrapper } from "./create_task_wrapper.js";
+import { createTaskSummary } from "./create_task_summary.js";
+import { createProjectSummary } from "./create_project_summary.js";
 
 const handlers = ( function() {
 
@@ -141,8 +142,11 @@ const handlers = ( function() {
         if (!projectIndex) { return }
 
         // if (event.target.matches('li')) {
-        console.log("EVENT CLICK ON PROJECT LIST")
-        displayProjectWrapper(projectIndex);
+        console.log("EVENT CLICK ON PROJECT LIST");
+        const project = PROJECTS.get()[projectIndex];
+        displayProjectWrapper(project);
+        const projectSummary = createProjectSummary(project);
+        domRender.editorForm(projectSummary);
     }
 
 
@@ -205,7 +209,7 @@ const handlers = ( function() {
         const task = PROJECTS.getTask(taskProjectIndex, projectIndex)
         const taskIndex = TASKS.indexOf(task);
         
-        const taskWrapper = createTaskWrapper(task, taskIndex);
+        const taskWrapper = createTaskSummary(task, taskIndex);
         domRender.editorForm(taskWrapper);
         
     }
