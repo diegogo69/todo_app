@@ -40,19 +40,10 @@ const PROJECTS = ( function() {
         console.log('Task added to default project SUCCESSFULLY');
     }
 
-    // Toggle task complete
-    function taskCompleted(taskIndex, projectIndex) {
-        const task = projects[projectIndex]["tasks"][taskIndex];
-        task.completed = !task.completed;
-        // true or false
-        return task.completed;
-
-    }
-
     // make projects private
     return {
         get, set, add, remove,
-        addTaskToProject, indexOf, taskCompleted,
+        addTaskToProject, indexOf,
         getTask,
         
     };

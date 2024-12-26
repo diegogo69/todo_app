@@ -42,6 +42,14 @@ class Project {
         }
     }
 
+    // Toggle task complete
+    taskCompleted() {
+        this.completed = !this.completed;
+        // true or false
+        return this.completed;
+    }
+
+
     // --- DESCRIPTION ---
 
     // Set. Add / remove this projects description
