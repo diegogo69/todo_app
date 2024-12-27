@@ -42,6 +42,9 @@ addProjectBtn.addEventListener('click', displayProjectForm);
 const allTaskNode = navNode.querySelector('.tasks-all');
 allTaskNode.addEventListener('click', handlers.allTasks);
 
+const tasksCompletedNode = navNode.querySelector('.tasks-completed');
+tasksCompletedNode.addEventListener('click', handlers.tasksCompleted);
+
 // ------------ DOM RENDERING ------------
 
 

@@ -9,6 +9,7 @@ function createWrapper(project) {
     title.textContent = project.title;
 
     heading.appendChild(title);
+    wrapper.appendChild(heading);
 
     const tasksWrapper = document.createElement('div');
     tasksWrapper.classList.add('tasks-wrapper');

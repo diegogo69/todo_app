@@ -25,9 +25,13 @@ const TASKS = ( function() {
         return tasks.indexOf(task);
     }
 
+    function getCompleted(){
+        return tasks.filter(task => task.completed === true)
+    }
+
     return {
         get, set, add, remove,
-        indexOf,
+        indexOf, getCompleted, 
     }
 } )();
 

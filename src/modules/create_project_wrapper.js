@@ -31,7 +31,7 @@ function createProjectWrapper(project, index) {
         taskLi.dataset.taskProjectIndex = project.tasks.indexOf(task);
         taskLi.classList.add('task-item');
 
-        taskLi.addEventListener('click', handlers.displayTaskWrapper);
+        taskLi.addEventListener('click', handlers.displayTaskSummary);
 
         // Task title
         const taskTitle = document.createElement('p');

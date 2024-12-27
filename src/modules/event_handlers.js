@@ -193,6 +193,14 @@ const handlers = ( function() {
         console.log('All tasks shown')
     }
 
+    function tasksCompleted(event) {
+        const allTasks = TASKS.getCompleted();
+        const allTasksWrapper = createWrapper({title: "Tasks completed", tasks: allTasks});
+        domRender.projectWrapper(allTasksWrapper);
+        console.log('All tasks completed shown')
+
+    }
+
 
     function toolProject(event) {
         const li = event.target.closest('li');
@@ -270,7 +278,7 @@ const handlers = ( function() {
             const taskProjectIndex = taskItem.dataset.taskProjectIndex;
             projectIndex = projectWrapper.dataset.projectIndex;
     
-            task = PROJECTS.getTask(taskProjectIndex, projectIndex)
+            task = PROJECTS.getTask(taskProjectIndex, projectIndex);
             taskIndex = TASKS.indexOf(task);
         }
 
@@ -303,7 +311,8 @@ const handlers = ( function() {
         projectSubmit, toolProject, taskSubmit,
         textareaAutoHeight, taskCompleted, displayTaskSummary,
         taskUpdate, taskRemove, projectUpdate,
-        projectRemove, allTasks, 
+        projectRemove, allTasks, tasksCompleted,
+
     }
 } )();
 
