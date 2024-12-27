@@ -166,16 +166,21 @@ const handlers = ( function() {
 
 
     function taskCompleted(event) {
+        // Completed icon
         const icon = event.currentTarget;
+        // task li el
         const taskLi = icon.closest('.task-item');
+        // task index within project
         const taskProjectIndex = taskLi.dataset.taskProjectIndex;
         
+        // reference project wrapper to get project index
         const projectWrapper = this.closest('.project-wrapper');
         const projectIndex = projectWrapper.dataset.projectIndex;
 
         // Mark complete
         const project = PROJECTS.get()[projectIndex];
-        const completed = project.taskCompleted();
+        const task = project['tasks'][taskProjectIndex];
+        const completed = task.setComplete();
 
         if (completed) {
             taskLi.classList.add('completed');

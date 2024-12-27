@@ -100,8 +100,9 @@ class Task {
     }
 
     // --- COMPLETE ---
-    setComplete(completed) {
-        this.completed = completed;
+    setComplete() {
+        this.completed = !this.completed;
+        return this.completed;
     }
 
     // Update data
