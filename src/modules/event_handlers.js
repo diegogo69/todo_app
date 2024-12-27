@@ -28,7 +28,6 @@ const handlers = ( function() {
         this.reset();
         // Create project instance
         const newProject = Project.newProject( projectData )
-        // Use PROJECTS.Projects instead
         PROJECTS.add(newProject);
         console.log('Project added succesfully to projects array');
         // Reasign new projects array in localStorage
@@ -46,9 +45,6 @@ const handlers = ( function() {
 
         // Testing logs
         console.log("Task update handler works fine");
-        console.log("LOG EVENT: ");
-        console.log(event.target); // Form node
-        console.log("it works")
 
         const projectData = getFormData(this);
 

@@ -10,7 +10,6 @@ class Project {
 
     // STATIC METHODS
 
-    // Project.createProject
     // Simple, create a project by just typing its title
     static newProject( {title, tasks, description, taskgroups} ) {
         // Create project
@@ -37,18 +36,7 @@ class Project {
         if (index > -1) { 
             // From task array on index remove 1 element
             this.tasks.splice(index, 1);
-            task.project = null;
-            // task = null ?????? to delete it completely
         }
-    }
-
-
-    // --- DESCRIPTION ---
-
-    // Set. Add / remove this projects description
-    // If no description passed, empty it. Else add it
-    setDescription(description="") {
-        this.description = description
     }
 
     // --- TASKGROUPS / HEADINGS ---
@@ -84,7 +72,7 @@ class Project {
     }
 
     // --- COMPLETE ---
-    checkComplete(completed) {
+    checkComplete() {
         for (let task of this.tasks) {
             if (!task.completed) { return false }
         }

@@ -34,8 +34,10 @@ localStorage.clear();
 
 // -------------------- DOM STUFF -------------------------
 const navNode = document.querySelector('nav');
+
 const addTaskBtn = navNode.querySelector('#addTask');
 addTaskBtn.addEventListener('click', displayTaskForm);
+
 const addProjectBtn = navNode.querySelector('#addProject');
 addProjectBtn.addEventListener('click', displayProjectForm);
 

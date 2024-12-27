@@ -18,6 +18,7 @@ const TASKS = ( function() {
         let index = tasks.indexOf(task);
         if (index > -1) {
             tasks.splice(index, 1);
+            task = null;
         }
     }
 

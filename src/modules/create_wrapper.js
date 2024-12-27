@@ -42,16 +42,8 @@ function createWrapper(project) {
         }
         iconComplete.addEventListener('click', handlers.taskCompleted);
         
-        // // Task delete icon
-        // const iconRemove = document.createElement('div');
-        // iconRemove.classList.add('icon', 'task-remove');
-        // iconRemove.innerHTML = SVGRemove;
-        // iconRemove.addEventListener('click', handlers.taskRemove);
-
-
         taskLi.appendChild(iconComplete);
         taskLi.appendChild(taskTitle);
-        // taskLi.appendChild(iconRemove);
         tasksUl.appendChild(taskLi);
     }
 

@@ -1,28 +1,27 @@
 import { handlers } from "./event_handlers.js";
 
+DEFAULT_PROJECT = 0;
+
 function createAddTaskForm() {
     const form = document.createElement('form');
-    form.classList.add('taskForm');
-    form.id = "addTaskForm";
+    form.classList.add('task-form');
     form.dataset.formType = "task";
+    form.dataset.projectIndex = DEFAULT_PROJECT;
     // On submit event listener
     form.addEventListener('submit', handlers.taskSubmit);
 
 
     const taskTitle = document.createElement('textarea');
-    // taskTitle.id = "taskTitle";
-    // taskTitle.classList.add('taskTitleInput');
     taskTitle.classList.add('form-title');
     taskTitle.rows = 1;
     taskTitle.spellcheck = false;
     taskTitle.placeholder = "Add new task..."
     taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
-
     form.appendChild(taskTitle);
 
+
     const taskDescription = document.createElement('textarea');
-    // taskDescription.id = "taskDescription";
     taskDescription.classList.add('form-description');
     taskDescription.spellcheck = false;
     taskDescription.placeholder = "Notes";
@@ -58,14 +57,6 @@ function createAddTaskForm() {
     submitBtn.textContent = "Add";
 
     form.appendChild(submitBtn);
-
-    const projectIndex = document.createElement('input');
-    projectIndex.classList.add('project-index')
-    projectIndex.type = "hidden";
-    
-    projectIndex.value = 0;
-
-    form.appendChild(projectIndex);
     
     // Add text area auto height handler
     handlers.textareaAutoHeight(form);
