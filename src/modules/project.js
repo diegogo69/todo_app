@@ -84,8 +84,11 @@ class Project {
     }
 
     // --- COMPLETE ---
-    setComplete(completed) {
-        this.completed = completed;
+    checkComplete(completed) {
+        for (let task of this.tasks) {
+            if (!task.completed) { return false }
+        }
+        return true;
     }
 
     // Update data

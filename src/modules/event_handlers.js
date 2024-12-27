@@ -219,7 +219,13 @@ const handlers = ( function() {
         const allTasksWrapper = createWrapper({title: "Tasks completed", tasks: allTasks});
         domRender.projectWrapper(allTasksWrapper);
         console.log('All tasks completed shown')
+    }
 
+    function tasksPlanned(event) {
+        const allTasks = TASKS.getPlanned();
+        const allTasksWrapper = createWrapper({title: "Tasks planned", tasks: allTasks});
+        domRender.projectWrapper(allTasksWrapper);
+        console.log('All tasks completed shown')
     }
 
 
@@ -333,6 +339,7 @@ const handlers = ( function() {
         textareaAutoHeight, taskCompleted, displayTaskSummary,
         taskUpdate, taskRemove, projectUpdate,
         projectRemove, allTasks, tasksCompleted,
+        tasksPlanned,
 
     }
 } )();

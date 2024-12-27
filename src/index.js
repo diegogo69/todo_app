@@ -45,6 +45,10 @@ allTaskNode.addEventListener('click', handlers.allTasks);
 const tasksCompletedNode = navNode.querySelector('.tasks-completed');
 tasksCompletedNode.addEventListener('click', handlers.tasksCompleted);
 
+
+const tasksPlannedNode = navNode.querySelector('.tasks-planned');
+tasksPlannedNode.addEventListener('click', handlers.tasksPlanned);
+
 // ------------ DOM RENDERING ------------
 
 

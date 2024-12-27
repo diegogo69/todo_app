@@ -26,12 +26,17 @@ const TASKS = ( function() {
     }
 
     function getCompleted(){
-        return tasks.filter(task => task.completed === true)
+        return tasks.filter(task => task.completed)
+    }
+
+    function getPlanned() {
+        return tasks.filter(task => !task.completed)
     }
 
     return {
         get, set, add, remove,
-        indexOf, getCompleted, 
+        indexOf, getCompleted, getPlanned,
+        
     }
 } )();
 
