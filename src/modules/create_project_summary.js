@@ -1,5 +1,6 @@
 import { handlers } from "./event_handlers.js";
 
+
 function createProjectSummary(project, projectIndex) {
     const form = document.createElement('form');
     form.classList.add('project-form');

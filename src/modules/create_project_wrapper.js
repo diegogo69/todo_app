@@ -1,7 +1,7 @@
 import { handlers } from "./event_handlers.js";
 
 // SVG's
-const SVGTaskRemove = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>';
+const SVGRemove = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>';
 const SVGTaskCompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle</title><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
 
 
@@ -52,7 +52,7 @@ function createProjectWrapper(project, index) {
         // Task delete icon
         const iconRemove = document.createElement('div');
         iconRemove.classList.add('icon', 'task-remove');
-        iconRemove.innerHTML = SVGTaskRemove;
+        iconRemove.innerHTML = SVGRemove;
         iconRemove.addEventListener('click', handlers.taskRemove);
 
 

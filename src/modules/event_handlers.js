@@ -61,6 +61,34 @@ const handlers = ( function() {
     }
 
 
+    // REMOVE TASK
+    function projectRemove(event) {
+        const icon = event.currentTarget;
+        const taskLi = icon.closest('.task-item');
+        
+        const iconWrapper = this.closest('.project-item');
+        const projectIndex = iconWrapper.dataset.projectIndex;
+
+        if (projectIndex == 0) { 
+            console.log('Cannot remove default project')
+            return
+        }
+        // Reference task
+        const project = PROJECTS.get()[projectIndex];
+
+        // Remove from project
+        PROJECTS.remove(project);
+        console.log('Project removed succesfully')
+
+        todoLocalstorage.update.projects();
+        // displayProjectWrapper(project);
+        const toolProjects = createToolProjects(PROJECTS.get());
+        domRender.toolProjects(toolProjects);
+        domRender.clear.generalNode();
+
+    }
+
+
     // TASK SUBMIT FUNCTION HANDLER
     function taskSubmit(event) {
         event.preventDefault();
@@ -163,6 +191,9 @@ const handlers = ( function() {
         const projectIndex = li.dataset.projectIndex;
         if (!projectIndex) { return }
 
+        const isRemove = event.target.closest('.project-remove');
+        if (isRemove) { return };
+
         // if (event.target.matches('li')) {
         console.log("EVENT CLICK ON PROJECT LIST");
         const project = PROJECTS.get()[projectIndex];
@@ -254,6 +285,7 @@ const handlers = ( function() {
         projectSubmit, toolProject, taskSubmit,
         textareaAutoHeight, taskCompleted, displayTaskSummary,
         taskUpdate, taskRemove, projectUpdate,
+        projectRemove,
     }
 } )();
 

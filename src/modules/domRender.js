@@ -4,29 +4,40 @@ const domRender = ( function() {
     const toolProjectsNode = document.querySelector('#tool-projects-wrapper');
 
     function toolProjects(projectsUl) {
-        clearNode(toolProjectsNode);
+        clear.node(toolProjectsNode);
         toolProjectsNode.appendChild(projectsUl);
     }
 
     function editorForm(form) {
-        clearNode(editorNode);
+        clear.editorNode();
         editorNode.appendChild(form);
         editorNode.querySelector('.form-title').focus();
     }
 
     function projectWrapper(projectNode) {
-        clearNode(generalNode);
+        clear.generalNode();
         generalNode.appendChild(projectNode)
     }
 
+    const clear = {
+        node(node) {
+            while (node.firstChild) {
+                node.removeChild(node.firstChild);
+            }
+        },
 
-    function clearNode(node) {
-        while (node.firstChild) {
-            node.removeChild(node.firstChild);
-        }
+        generalNode() {
+            this.node(generalNode);
+        },
+
+        editorNode() {
+            this.node(editorNode);
+        },
     }
 
-    return { toolProjects, editorForm, projectWrapper, };
+    return { toolProjects, editorForm, projectWrapper,
+        clear,
+     };
 } )();
 
 export { domRender }

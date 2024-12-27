@@ -1,11 +1,15 @@
 import { handlers } from "./event_handlers.js";
 
+const SVGRemove = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>';
+
 function createToolProjects(projects) {
     // reference toolbar projects list
     const projectsUl = document.createElement('ul');
     
     for (let i = 0; i < projects.length; i++) {
         const li = document.createElement('li');
+        li.classList.add('project-item');
+        li.dataset.projectIndex = i;
 
         const icon = document.createElement('div');
         icon.classList.add('icon');
@@ -16,7 +20,15 @@ function createToolProjects(projects) {
         p.textContent = projects[i].title;
         li.appendChild(p);
 
-        li.dataset.projectIndex = i;
+        // Task delete icon. Not on default project
+        if (i > 0) {
+            const iconRemove = document.createElement('div');
+            iconRemove.classList.add('icon', 'project-remove');
+    
+            iconRemove.innerHTML = SVGRemove;
+            iconRemove.addEventListener('click', handlers.projectRemove);
+            li.appendChild(iconRemove);
+        }    
 
         projectsUl.appendChild(li)
     }
