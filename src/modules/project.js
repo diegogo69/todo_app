@@ -42,13 +42,6 @@ class Project {
         }
     }
 
-    // Toggle task complete
-    taskCompleted() {
-        this.completed = !this.completed;
-        // true or false
-        return this.completed;
-    }
-
 
     // --- DESCRIPTION ---
 
@@ -63,21 +56,6 @@ class Project {
     // Add taskgroup list to project. not create one
     // Add taskgroup 1 by 1 or as a list as well
     addTaskgroup(taskgroup) {
-
-        // This actually doesn't make sense
-        // Because yes, we can grab many tasks
-        // But they are wrapped in ONE taskgroup
-        // We are not creating a task group for every task
-
-        // If arg passed is iterable
-        // if (Array.isArray(taskgroup)) {
-        //     for (let task of taskgroup) {
-        //         // add to subtasks prop
-        //         this.taskgroups.push(task);
-        //     }
-        //     return
-        // }
-        // If arg passed not iterable
 
         // Añadir heading / taskgroup al proyect
         this.taskgroups.push(taskgroup);
@@ -94,8 +72,6 @@ class Project {
 
             task.taskgroup = taskgroup;
         }
-
-
     }
 
     // Delete taskgroup

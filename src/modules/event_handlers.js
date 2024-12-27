@@ -170,16 +170,32 @@ const handlers = ( function() {
         const icon = event.currentTarget;
         // task li el
         const taskLi = icon.closest('.task-item');
-        // task index within project
-        const taskProjectIndex = taskLi.dataset.taskProjectIndex;
         
+        let projectIndex, taskIndex;
+        let project, task;
         // reference project wrapper to get project index
         const projectWrapper = this.closest('.project-wrapper');
-        const projectIndex = projectWrapper.dataset.projectIndex;
+        
+        // If not a project wrapper get index from task el
+        if (!projectWrapper) {
+            projectIndex = taskLi.dataset.projectIndex;
+            // task index in TASKS
+            taskIndex = taskLi.dataset.taskIndex;
 
-        // Mark complete
-        const project = PROJECTS.get()[projectIndex];
-        const task = project['tasks'][taskProjectIndex];
+            // Mark complete
+            project = PROJECTS.get()[projectIndex];
+            task = TASKS.get()[taskIndex];
+
+        } else {
+            projectIndex = projectWrapper.dataset.projectIndex;
+            // task index within project
+            taskIndex = taskLi.dataset.taskProjectIndex;
+
+            // Mark complete
+            project = PROJECTS.get()[projectIndex];
+            task = project['tasks'][taskIndex];
+        }
+
         const completed = task.setComplete();
 
         if (completed) {
