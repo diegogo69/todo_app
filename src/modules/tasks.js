@@ -1,8 +1,10 @@
 const TASKS = ( function() {
     let tasks;
 
-    function get() {
-        return tasks;
+    function get(index=null) {
+        // If no index passed return whole array
+        if (index === null) { return tasks }
+        return tasks.index;
     };
 
     function set(value) {

@@ -11,6 +11,10 @@ import { createTaskSummary } from "./create_task_summary.js";
 import { createProjectSummary } from "./create_project_summary.js";
 import { createWrapper } from "./create_wrapper.js";
 
+
+const SVGTaskCompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle</title><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+const SVGTaskUncompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-blank-circle-outline</title><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+
 const handlers = ( function() {
 
     // Event handling functions
@@ -18,9 +22,6 @@ const handlers = ( function() {
         event.preventDefault();
 
         console.log("Project submit handler works fine");
-        console.log("LOG EVENT: ");
-        console.log(event.target); // Form node
-        console.log("it works")
 
         // Retrieve data from form
         const projectData = getFormData(this); // {title, description }
@@ -48,7 +49,7 @@ const handlers = ( function() {
 
         const projectData = getFormData(this);
 
-        const project = PROJECTS.get()[projectData.projectIndex];
+        const project = PROJECTS.get(projectData.projectIndex);
         project.updateData(projectData);
         console.log(`Project data update succesfully`);
 
@@ -62,17 +63,16 @@ const handlers = ( function() {
     // REMOVE TASK
     function projectRemove(event) {
         const icon = event.currentTarget;
-        const taskLi = icon.closest('.task-item');
         
-        const iconWrapper = this.closest('.project-item');
-        const projectIndex = iconWrapper.dataset.projectIndex;
+        const projectEl = this.closest('.project-item');
+        const projectIndex = projectEl.dataset.projectIndex;
 
         if (projectIndex == 0) { 
             console.log('Cannot remove default project')
             return
         }
         // Reference task
-        const project = PROJECTS.get()[projectIndex];
+        const project = PROJECTS.get(projectIndex);
 
         // Remove from project
         PROJECTS.remove(project);
@@ -92,9 +92,6 @@ const handlers = ( function() {
         event.preventDefault();
         // Testing logs
         console.log("Task submit handler works fine");
-        console.log("LOG EVENT: ");
-        console.log(event.target); // Form node
-        console.log("it works")
         // Extract form data
         const taskData = getFormData(this); // {title, description, subtasks, project}
         // Empty form
@@ -119,16 +116,13 @@ const handlers = ( function() {
         event.preventDefault();
         // Testing logs
         console.log("Task update handler works fine");
-        console.log("LOG EVENT: ");
-        console.log(event.target); // Form node
-        console.log("it works")
         // Extract form data
         const taskData = getFormData(this); // {title, description, subtasks, project}
         // Empty form
         this.reset();
 
         // Reference task from tasks arr via taskIndex
-        const task = TASKS.get()[taskData.taskIndex];
+        const task = TASKS.get(taskData.taskIndex);
         // Update task data
         task.updateData(taskData);
         console.log(`Task data update succesfully`);
@@ -150,7 +144,7 @@ const handlers = ( function() {
         const projectIndex = projectWrapper.dataset.projectIndex;
 
         // Reference task
-        const project = PROJECTS.get()[projectIndex];
+        const project = PROJECTS.get(projectIndex);
         const task = project['tasks'][taskProjectIndex];
 
         // Remove from project
@@ -179,8 +173,8 @@ const handlers = ( function() {
             taskIndex = taskLi.dataset.taskIndex;
 
             // Mark complete
-            project = PROJECTS.get()[projectIndex];
-            task = TASKS.get()[taskIndex];
+            project = PROJECTS.get(projectIndex);
+            task = TASKS.get(taskIndex);
 
         } else {
             projectIndex = projectWrapper.dataset.projectIndex;
@@ -188,7 +182,7 @@ const handlers = ( function() {
             taskIndex = taskLi.dataset.taskProjectIndex;
 
             // Mark complete
-            project = PROJECTS.get()[projectIndex];
+            project = PROJECTS.get(projectIndex);
             task = project['tasks'][taskIndex];
         }
 
@@ -196,10 +190,10 @@ const handlers = ( function() {
 
         if (completed) {
             taskLi.classList.add('completed');
-            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle</title><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+            icon.innerHTML = SVGTaskCompleted;
         } else {
             taskLi.classList.remove('completed');
-            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-blank-circle-outline</title><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+            icon.innerHTML = SVGTaskUncompleted;
         }
     }
 
@@ -235,7 +229,7 @@ const handlers = ( function() {
 
         // if (event.target.matches('li')) {
         console.log("EVENT CLICK ON PROJECT LIST");
-        const project = PROJECTS.get()[projectIndex];
+        const project = PROJECTS.get(projectIndex);
         displayProjectWrapper(project);
         const projectSummary = createProjectSummary(project, projectIndex);
         domRender.editorForm(projectSummary);
@@ -277,7 +271,7 @@ const handlers = ( function() {
         
         else {
             projectIndex = project;
-            project = PROJECTS.get()[projectIndex];
+            project = PROJECTS.get(projectIndex);
         }
         
         const projectWrapper = createProjectWrapper(project, projectIndex);
@@ -308,7 +302,7 @@ const handlers = ( function() {
         else {
             taskIndex = taskItem.dataset.taskIndex;
             projectIndex = taskItem.dataset.projectIndex;
-            task = TASKS.get()[taskIndex];
+            task = TASKS.get(taskIndex);
         }
         
         const taskWrapper = createTaskSummary(task, taskIndex);

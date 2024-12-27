@@ -8,8 +8,10 @@ const PROJECTS = ( function() {
         projects = value;
     }
 
-    function get() {
-        return projects;
+    function get(index=null) {
+        // If no index passed return whole array
+        if (index === null) { return projects }
+        return projects.index;
     }
 
     // Add project from projects
