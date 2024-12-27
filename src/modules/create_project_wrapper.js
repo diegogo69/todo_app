@@ -11,7 +11,7 @@ function createProjectWrapper(project, index) {
     projectWrapper.classList.add('project-wrapper');
     projectWrapper.dataset.projectIndex = index;
 
-    const heading = document.createElement('heading');
+    const heading = document.createElement('header');
     const title = document.createElement('h2');
     title.textContent = project.title;
 

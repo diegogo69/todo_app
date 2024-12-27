@@ -33,11 +33,14 @@ const DEFAULT_PROJECT = 0;
 localStorage.clear();
 
 // -------------------- DOM STUFF -------------------------
-const addTaskBtn = document.querySelector('#addTask');
+const navNode = document.querySelector('nav');
+const addTaskBtn = navNode.querySelector('#addTask');
 addTaskBtn.addEventListener('click', displayTaskForm);
-const addProjectBtn = document.querySelector('#addProject');
+const addProjectBtn = navNode.querySelector('#addProject');
 addProjectBtn.addEventListener('click', displayProjectForm);
 
+const allTaskNode = navNode.querySelector('.tasks-all');
+allTaskNode.addEventListener('click', handlers.allTasks);
 
 // ------------ DOM RENDERING ------------
 
