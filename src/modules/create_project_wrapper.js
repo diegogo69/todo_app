@@ -70,8 +70,8 @@ function createProjectWrapper(project, index) {
     // Footer form
     const newTaskForm = document.createElement('form');
     newTaskForm.dataset.formType = "task";
-    newTaskForm.id = "newTaskForm";
-    newTaskForm.classList.add('taskForm');
+    newTaskForm.dataset.projectIndex = index;
+    newTaskForm.classList.add('task-form');
 
     // Footer form input
     const newTaskInput = document.createElement('input');

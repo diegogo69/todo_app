@@ -1,6 +1,6 @@
 import { handlers } from "./event_handlers.js";
 
-DEFAULT_PROJECT = 0;
+const DEFAULT_PROJECT = 0;
 
 function createAddTaskForm() {
     const form = document.createElement('form');

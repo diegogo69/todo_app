@@ -11,7 +11,7 @@ const PROJECTS = ( function() {
     function get(index=null) {
         // If no index passed return whole array
         if (index === null) { return projects }
-        return projects.index;
+        return projects[index];
     }
 
     // Add project from projects

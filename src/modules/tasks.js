@@ -4,7 +4,7 @@ const TASKS = ( function() {
     function get(index=null) {
         // If no index passed return whole array
         if (index === null) { return tasks }
-        return tasks.index;
+        return tasks[index];
     };
 
     function set(value) {
