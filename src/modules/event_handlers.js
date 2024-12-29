@@ -227,7 +227,6 @@ const handlers = ( function() {
         const isRemove = event.target.closest('.project-remove');
         if (isRemove) { return };
 
-        // if (event.target.matches('li')) {
         console.log("EVENT CLICK ON PROJECT LIST");
         const project = PROJECTS.get(projectIndex);
         displayProjectWrapper(project);
