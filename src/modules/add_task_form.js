@@ -78,9 +78,9 @@ function createAddTaskForm(projects) {
 
     const priUl = document.createElement('ul');
     const priorityVal = [
-        {text: "Low", val: 1,},
-        {text: "Normal", val: 2,},
-        {text: "High", val: 3,},
+        {text: "Normal", val: 1,},
+        {text: "Important", val: 2,},
+        {text: "Urgent", val: 3,},
     ]
 
     for (let priority of priorityVal) {

@@ -34,7 +34,7 @@ function getFormData(form) {
 
 
         // PRIORITY
-        let priority = null;
+        let priority = 2;
         const taskPriority = form.querySelector('input[type="radio"]:checked');
         if (taskPriority) { priority = taskPriority.value; }
 
