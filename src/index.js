@@ -45,7 +45,7 @@ tasksPlannedNode.addEventListener('click', handlers.tasksPlanned);
 // This manages creating and adding the node, eventlisteners
 function displayTaskForm() {
     // Creeate form
-    const addTaskForm = createAddTaskForm();
+    const addTaskForm = createAddTaskForm(PROJECTS.get());
     // Render form
     domRender.editorForm(addTaskForm);
     // Autofocus
