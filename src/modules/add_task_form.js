@@ -10,6 +10,7 @@ function createAddTaskForm() {
     // On submit event listener
     form.addEventListener('submit', handlers.taskSubmit);
 
+    let arrFormControls = [];
 
     const taskTitle = document.createElement('textarea');
     taskTitle.classList.add('form-title');
@@ -18,7 +19,8 @@ function createAddTaskForm() {
     taskTitle.placeholder = "Add new task..."
     taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
-    form.appendChild(taskTitle);
+    // form.appendChild(taskTitle);
+    arrFormControls.push([taskTitle]);
 
 
     const taskDescription = document.createElement('textarea');
@@ -27,15 +29,13 @@ function createAddTaskForm() {
     taskDescription.placeholder = "Notes";
     taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
 
-    form.appendChild(taskDescription);
+    // form.appendChild(taskDescription);
+    arrFormControls.push([taskDescription]);
 
 
     const subtaskHeading = document.createElement('h4');
     subtaskHeading.textContent = "Subtasks";
-
-    form.appendChild(subtaskHeading);
-
-
+    
     const subtaskUl = document.createElement('ul');
     const subtaskLi = document.createElement('li');
     const subtask = document.createElement('textarea');
@@ -45,10 +45,12 @@ function createAddTaskForm() {
     subtask.classList.add('subtask');
     subtask.placeholder = "Add a new subtask";
     subtask.value = "DOM NEWLY CREATED TASK YEIII";
-
+    
+    // form.appendChild(subtaskHeading);
     subtaskLi.appendChild(subtask);
     subtaskUl.appendChild(subtaskLi);
-    form.appendChild(subtaskUl);
+    // form.appendChild(subtaskUl);
+    arrFormControls.push([subtaskHeading, subtaskUl]);
 
 
     const submitBtn = document.createElement('button');
@@ -56,8 +58,21 @@ function createAddTaskForm() {
     submitBtn.type = "submit";
     submitBtn.textContent = "Add";
 
-    form.appendChild(submitBtn);
+    // form.appendChild(submitBtn);
+    arrFormControls.push([submitBtn]);
+
     
+    for (let control of arrFormControls) {
+        let wrapper = document.createElement('div');
+        wrapper.classList.add('control-wrapper');
+
+        for (let el of control) {
+            wrapper.appendChild(el);
+        }
+        
+        form.appendChild(wrapper);
+    }
+
     // Add text area auto height handler
     handlers.textareaAutoHeight(form);
 
