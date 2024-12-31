@@ -40,6 +40,10 @@ const handlers = ( function() {
         displayProjectWrapper(newProject);
     }
 
+    function clearEditorNode() {
+        domRender.clear.editorNode();
+    }
+
     // Edit project data
     function projectUpdate(event) {
         event.preventDefault();
@@ -328,7 +332,7 @@ const handlers = ( function() {
         textareaAutoHeight, taskCompleted, displayTaskSummary,
         taskUpdate, taskRemove, projectUpdate,
         projectRemove, allTasks, tasksCompleted,
-        tasksPlanned,
+        tasksPlanned, clearEditorNode, 
 
     }
 } )();

@@ -21,7 +21,7 @@ function createAddTaskForm(projects) {
     taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
     // form.appendChild(taskTitle);
-    arrFormSections.push([taskTitle]);
+    arrFormSections.push({section: "title", controls: [taskTitle]});
 
 
     const taskDescription = document.createElement('textarea');
@@ -31,7 +31,7 @@ function createAddTaskForm(projects) {
     taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
 
     // form.appendChild(taskDescription);
-    arrFormSections.push([taskDescription]);
+    arrFormSections.push({section: "description", controls: [taskDescription]});
 
 
     const subtaskHeading = document.createElement('h4');
@@ -51,7 +51,7 @@ function createAddTaskForm(projects) {
     subtaskLi.appendChild(subtask);
     subtaskUl.appendChild(subtaskLi);
     // form.appendChild(subtaskUl);
-    arrFormSections.push([subtaskHeading, subtaskUl]);
+    arrFormSections.push({section: "subtasks", controls: [subtaskHeading, subtaskUl]});
 
 
     // DATE
@@ -66,7 +66,7 @@ function createAddTaskForm(projects) {
     // dateControl.min = today;
     dateControl.value = today;
 
-    arrFormSections.push([dateLabel, dateControl]);
+    arrFormSections.push({section: "due-date", controls: [dateLabel, dateControl]});
 
 
     // PRIORITY
@@ -104,7 +104,7 @@ function createAddTaskForm(projects) {
         priUl.appendChild(priLi);
     }
     fieldset.appendChild(priUl);
-    arrFormSections.push([fieldset]);
+    arrFormSections.push({section: "priority", controls: [fieldset]});
 
 
     // PROJECTS LIST
@@ -126,7 +126,7 @@ function createAddTaskForm(projects) {
         select.appendChild(opt);
     }
 
-    arrFormSections.push([selLabel, select])
+    arrFormSections.push({section: "project-select", controls: [selLabel, select]})
 
 
 
@@ -135,15 +135,22 @@ function createAddTaskForm(projects) {
     submitBtn.type = "submit";
     submitBtn.textContent = "Add";
 
+    const cancelBtn = document.createElement('button');
+    cancelBtn.type = "button";
+    cancelBtn.classList.add('btn-cancel');
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.addEventListener('click', handlers.clearEditorNode);
+
     // form.appendChild(submitBtn);
-    arrFormSections.push([submitBtn]);
+    arrFormSections.push({section: "buttons", controls: [submitBtn, cancelBtn]});
 
     // Create wrappers for form section
-    for (let section of arrFormSections) {
+    for (let item of arrFormSections) {
         let wrapper = document.createElement('div');
         wrapper.classList.add('control-wrapper');
+        wrapper.classList.add(`section-${item.section}`)
 
-        for (let control of section) {
+        for (let control of item.controls) {
             wrapper.appendChild(control);
         }
         
@@ -152,7 +159,6 @@ function createAddTaskForm(projects) {
 
     // Add text area auto height handler
     handlers.textareaAutoHeight(form);
-
 
     return form;
 }

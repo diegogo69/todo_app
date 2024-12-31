@@ -27,7 +27,7 @@ body {
     grid-template-areas:
         "aside header"
         "aside main";
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--bg);
     color: var(--dark);
 }
@@ -122,16 +122,11 @@ main {
     padding: 0 .8rem .8rem .8rem;
 }
 
-.editor,
-.general {
-    border: 2px solid var(--border);
-    border-radius: .5rem;
-}
-
 .general {
     flex: 1;
     padding: 1rem;
-
+    border: 2px solid var(--border);
+    border-radius: .5rem;
 }
 
 .project-wrapper {
@@ -224,8 +219,14 @@ main {
 
 .editor {
     flex: 1;
-    padding: 1rem;
 }
+
+.editor > * {
+    padding: 1rem;
+    border: 2px solid var(--border);
+    border-radius: .5rem;
+}
+
 
 .editor form {
     display: flex;
