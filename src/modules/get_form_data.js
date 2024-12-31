@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 function getFormData(form) {
     const formType = form.dataset.formType;
 
@@ -28,20 +30,20 @@ function getFormData(form) {
 
 
         // DATE
-        let dueDate = null;
+        let dueDate = format(new Date(), "yyyy-MM-dd");
         const taskDate = form.querySelector('.task-due-date');
         if (taskDate) { dueDate = taskDate.value; }
 
 
         // PRIORITY
-        let priority = 2;
+        let priority = 1;
         const taskPriority = form.querySelector('input[type="radio"]:checked');
         if (taskPriority) { priority = taskPriority.value; }
 
 
         // PROJECT INDEX
         let project;
-        const taskProjectSelect = document.querySelector('.task-project');
+        const taskProjectSelect = document.querySelector('.task-project-select');
         
         if (taskProjectSelect) { project = taskProjectSelect.value; }
         else { project = form.dataset.projectIndex; }

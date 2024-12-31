@@ -83,9 +83,9 @@ function createTaskSummary(task, taskIndex, projects) {
 
     const priUl = document.createElement('ul');
     const priorityVal = [
-        {text: "Low", val: 1,},
-        {text: "Normal", val: 2,},
-        {text: "High", val: 3,},
+        {text: "Normal", val: 1,},
+        {text: "Important", val: 2,},
+        {text: "Urgent", val: 3,},
     ]
 
     for (let priority of priorityVal) {
@@ -117,7 +117,7 @@ function createTaskSummary(task, taskIndex, projects) {
     selLabel.for = "projects-select";
     selLabel.textContent = "Select project";
     const select = document.createElement('select');
-    select.classList.add('task-project');
+    select.classList.add('task-project-select');
     select.id = "projects-select";
 
     for (let i = 0; i < projects.length; i++) {

@@ -112,7 +112,7 @@ function createAddTaskForm(projects) {
     selLabel.for = "projects-select";
     selLabel.textContent = "Select project";
     const select = document.createElement('select');
-    select.classList.add('task-project');
+    select.classList.add('task-project-select');
     select.id = "projects-select";
 
     for (let i = 0; i < projects.length; i++) {

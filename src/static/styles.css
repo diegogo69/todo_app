@@ -162,20 +162,64 @@ main {
     gap: .2rem;
 }
 
-.tasks-wrapper li {
-    display: flex;
+.task-item {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: min-content max-content min-content 1fr min-content;
+    display: grid;
+    grid-template-areas: 
+    "t-completed t-title t-title t-title t-remove"
+    "t-completed t-dueDate t-priority . t-remove";
     align-items: center;
-    gap: .4rem;
-    
-    padding: .3rem .4rem;
 }
 
-.task-item.completed {
+.task-item p {
+    grid-area: t-title;
+    padding: 0 .4rem;
+
+}
+
+.task-item .task-due-date {
+    grid-area: t-dueDate;
+    font-size: .8rem;
+    padding: 0 .4rem;
+}
+
+.task-item .task-priority {
+    grid-area: t-priority;
+    font-size: .8rem;
+    border-radius: .2rem;
+    padding: 0 .2rem;
+}
+
+.task-item .task-completed {
+    grid-area: t-completed;
+    align-self: flex-start;
+}
+
+.task-item .task-remove {
+    grid-area: t-remove;
+    align-self: flex-start;
+
+
+}
+.task-item.completed p {
     text-decoration: line-through;
 }
 
-.task-item.completed svg {
+.task-item.completed .task-completed {
     fill: var(--primary);
+}
+
+.task-priority.Normal {
+    background-color: lightgreen;
+}
+
+.task-priority.Important {
+    background-color: lightyellow;
+}
+
+.task-priority.Urgent {
+    background-color: lightcoral;
 }
 
 .editor {

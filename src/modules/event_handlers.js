@@ -179,7 +179,7 @@ const handlers = ( function() {
         } else {
             projectIndex = projectWrapper.dataset.projectIndex;
             // task index within project
-            taskIndex = taskLi.dataset.taskProjectIndex;
+            taskIndex = taskLi.dataset.taskIndex;
 
             // Mark complete
             project = PROJECTS.get(projectIndex);
@@ -291,7 +291,7 @@ const handlers = ( function() {
 
         const projectWrapper = taskItem.closest(".project-wrapper");
         if (projectWrapper) {
-            const taskProjectIndex = taskItem.dataset.taskProjectIndex;
+            const taskProjectIndex = taskItem.dataset.taskIndex;
             projectIndex = projectWrapper.dataset.projectIndex;
     
             task = PROJECTS.getTask(taskProjectIndex, projectIndex);
