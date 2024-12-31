@@ -9,9 +9,9 @@ function createAddTaskForm(projects) {
     form.dataset.formType = "task";
     form.dataset.projectIndex = DEFAULT_PROJECT;
     // On submit event listener
-    form.addEventListener('submit', handlers.taskSubmit);
-
-    let arrFormControls = [];
+    form.addEventListener('submit', handlers.taskSubmit);    
+    // Form sections arr. later to be added in wrapppers
+    let arrFormSections = [];
 
     const taskTitle = document.createElement('textarea');
     taskTitle.classList.add('form-title');
@@ -21,7 +21,7 @@ function createAddTaskForm(projects) {
     taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
     // form.appendChild(taskTitle);
-    arrFormControls.push([taskTitle]);
+    arrFormSections.push([taskTitle]);
 
 
     const taskDescription = document.createElement('textarea');
@@ -31,7 +31,7 @@ function createAddTaskForm(projects) {
     taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
 
     // form.appendChild(taskDescription);
-    arrFormControls.push([taskDescription]);
+    arrFormSections.push([taskDescription]);
 
 
     const subtaskHeading = document.createElement('h4');
@@ -51,7 +51,7 @@ function createAddTaskForm(projects) {
     subtaskLi.appendChild(subtask);
     subtaskUl.appendChild(subtaskLi);
     // form.appendChild(subtaskUl);
-    arrFormControls.push([subtaskHeading, subtaskUl]);
+    arrFormSections.push([subtaskHeading, subtaskUl]);
 
 
     // DATE
@@ -60,12 +60,13 @@ function createAddTaskForm(projects) {
     dateLabel.textContent = "Due date:"
 
     const dateControl = document.createElement('input');
+    dateControl.classList.add('task-due-date');
     dateControl.type = "date";
     const today = format(new Date(), "yyyy-MM-dd");
     // dateControl.min = today;
     dateControl.value = today;
 
-    arrFormControls.push([dateLabel, dateControl]);
+    arrFormSections.push([dateLabel, dateControl]);
 
 
     // PRIORITY
@@ -86,20 +87,24 @@ function createAddTaskForm(projects) {
         let priLi = document.createElement('li');
 
         let priLabel = document.createElement('label');
-        priLabel.for = priority.text;
+        // priLabel.for = priority.text;
+        priLabel.setAttribute('for', priority.text);
         priLabel.textContent = priority.text;
         
         let priRadio = document.createElement('input');
         priRadio.type = "radio";
         priRadio.id = priority.text;
         priRadio.value = priority.val;
+        priRadio.name = "priority";
+
+        if (priority.text === "Normal") { priRadio.checked = true }
 
         priLi.appendChild(priRadio);
         priLi.appendChild(priLabel);
         priUl.appendChild(priLi);
     }
     fieldset.appendChild(priUl);
-    arrFormControls.push([fieldset]);
+    arrFormSections.push([fieldset]);
 
 
     // PROJECTS LIST
@@ -107,6 +112,7 @@ function createAddTaskForm(projects) {
     selLabel.for = "projects-select";
     selLabel.textContent = "Select project";
     const select = document.createElement('select');
+    select.classList.add('task-project');
     select.id = "projects-select";
 
     for (let i = 0; i < projects.length; i++) {
@@ -120,7 +126,7 @@ function createAddTaskForm(projects) {
         select.appendChild(opt);
     }
 
-    arrFormControls.push([selLabel, select])
+    arrFormSections.push([selLabel, select])
 
 
 
@@ -130,15 +136,15 @@ function createAddTaskForm(projects) {
     submitBtn.textContent = "Add";
 
     // form.appendChild(submitBtn);
-    arrFormControls.push([submitBtn]);
+    arrFormSections.push([submitBtn]);
 
-    
-    for (let control of arrFormControls) {
+    // Create wrappers for form section
+    for (let section of arrFormSections) {
         let wrapper = document.createElement('div');
         wrapper.classList.add('control-wrapper');
 
-        for (let el of control) {
-            wrapper.appendChild(el);
+        for (let control of section) {
+            wrapper.appendChild(control);
         }
         
         form.appendChild(wrapper);

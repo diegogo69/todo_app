@@ -304,7 +304,7 @@ const handlers = ( function() {
             task = TASKS.get(taskIndex);
         }
         
-        const taskWrapper = createTaskSummary(task, taskIndex);
+        const taskWrapper = createTaskSummary(task, taskIndex, PROJECTS.get());
         domRender.editorForm(taskWrapper);
         
     }

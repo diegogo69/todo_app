@@ -15,8 +15,8 @@ function getFormData(form) {
 
     // IF IT'S A TASK FORM
     if (formType === "task") {
+        // SUBTASKS
         const formSubtasks = form.querySelectorAll('.subtask');
-        
         const subtasks = [];
         // If form have subtasks
         if (formSubtasks) {
@@ -26,11 +26,29 @@ function getFormData(form) {
             }
         }
 
-        // Project index
-        const project = form.dataset.projectIndex;
+
+        // DATE
+        let dueDate = null;
+        const taskDate = form.querySelector('.task-due-date');
+        if (taskDate) { dueDate = taskDate.value; }
+
+
+        // PRIORITY
+        let priority = null;
+        const taskPriority = form.querySelector('input[type="radio"]:checked');
+        if (taskPriority) { priority = taskPriority.value; }
+
+
+        // PROJECT INDEX
+        let project;
+        const taskProjectSelect = document.querySelector('.task-project');
+        
+        if (taskProjectSelect) { project = taskProjectSelect.value; }
+        else { project = form.dataset.projectIndex; }
+
         const taskIndex = form.dataset.taskIndex;
         
-        return {title, description, subtasks, project, taskIndex, };
+        return {title, description, subtasks, dueDate, priority, project, taskIndex, };
     }
 
     // IF IT'S A PROJECT FORM
