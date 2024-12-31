@@ -110,6 +110,7 @@ const handlers = ( function() {
         PROJECTS.addTaskToProject(newTask, newTask.project);
         // Assign PROJECTS array to localStorage 
         todoLocalstorage.update.projects();
+        clearEditorNode();
 
         displayProjectWrapper(taskData.project);
     }
@@ -142,14 +143,19 @@ const handlers = ( function() {
     function taskRemove(event) {
         const icon = event.currentTarget;
         const taskLi = icon.closest('.task-item');
-        const taskProjectIndex = taskLi.dataset.taskProjectIndex;
+        const taskIndex = taskLi.dataset.taskIndex;
+        let task, project, projectIndex;
         
         const projectWrapper = this.closest('.project-wrapper');
-        const projectIndex = projectWrapper.dataset.projectIndex;
-
-        // Reference task
-        const project = PROJECTS.get(projectIndex);
-        const task = project['tasks'][taskProjectIndex];
+        if (projectWrapper) {
+            projectIndex = projectWrapper.dataset.projectIndex;
+            project = PROJECTS.get(projectIndex);
+            task = project['tasks'][taskIndex];
+        } else {
+            task = TASKS.get(taskIndex);
+            projectIndex = task.project;
+            project = PROJECTS.get(projectIndex);
+        }
 
         // Remove from project
         project.removeTask(task);

@@ -35,7 +35,7 @@ function createAddTaskForm(projects) {
 
 
     const subtaskHeading = document.createElement('h4');
-    subtaskHeading.textContent = "Subtasks";
+    subtaskHeading.textContent = "Subtasks:";
     
     const subtaskUl = document.createElement('ul');
     const subtaskLi = document.createElement('li');
@@ -44,8 +44,8 @@ function createAddTaskForm(projects) {
     subtask.rows = "1";
     subtask.spellcheck = "false";
     subtask.classList.add('subtask');
+    subtask.classList.add('subtask-add');
     subtask.placeholder = "Add a new subtask";
-    subtask.value = "DOM NEWLY CREATED TASK YEIII";
     
     // form.appendChild(subtaskHeading);
     subtaskLi.appendChild(subtask);
@@ -85,6 +85,7 @@ function createAddTaskForm(projects) {
 
     for (let priority of priorityVal) {
         let priLi = document.createElement('li');
+        priLi.classList.add(priority.text);
 
         let priLabel = document.createElement('label');
         // priLabel.for = priority.text;
@@ -129,9 +130,8 @@ function createAddTaskForm(projects) {
     arrFormSections.push({section: "project-select", controls: [selLabel, select]})
 
 
-
     const submitBtn = document.createElement('button');
-    submitBtn.id = "submitBtn"
+    submitBtn.classList.add('btn-submit');
     submitBtn.type = "submit";
     submitBtn.textContent = "Add";
 

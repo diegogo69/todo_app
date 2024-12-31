@@ -23,6 +23,9 @@ function getFormData(form) {
         // If form have subtasks
         if (formSubtasks) {
             for (let subtask of formSubtasks) {
+                if (subtask.classList.contains('subtask-add')) {
+                    continue;
+                }
                 subtasks.push(subtask.value);
                 console.log("push subtask");
             }

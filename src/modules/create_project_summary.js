@@ -15,7 +15,7 @@ function createProjectSummary(project, projectIndex) {
     projectTitle.rows = 1;
     projectTitle.classList.add('form-title');
     projectTitle.spellcheck = false;
-    projectTitle.placeholder = "Add new project..."
+    projectTitle.placeholder = "Add new project";
     projectTitle.value = project.title;
 
     // form.appendChild(projectTitle);
@@ -24,13 +24,14 @@ function createProjectSummary(project, projectIndex) {
     const projectDescription = document.createElement('textarea');
     projectDescription.classList.add('form-description');
     projectDescription.spellcheck = false;
-    projectDescription.placeholder = "description";
+    projectDescription.placeholder = "Notes";
     projectDescription.value = project.description;
 
     // form.appendChild(projectDescription);
     arrFormSections.push({section: "description", controls: [projectDescription]});
 
     const submitBtn = document.createElement('button');
+    submitBtn.classList.add('btn-submit');
     submitBtn.type = "submit";
     submitBtn.textContent = "Add";
 

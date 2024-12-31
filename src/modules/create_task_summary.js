@@ -34,7 +34,7 @@ function createTaskSummary(task, taskIndex, projects) {
 
 
     const subtaskHeading = document.createElement('h4');
-    subtaskHeading.textContent = "Subtasks";
+    subtaskHeading.textContent = "Subtasks:";
 
     const subtaskUl = document.createElement('ul');
 
@@ -47,13 +47,16 @@ function createTaskSummary(task, taskIndex, projects) {
         subtask.spellcheck = "false";
         subtask.classList.add('subtask');
         subtask.placeholder = "Add a new subtask";
-
-        if(!lastIteration) {
+        
+        if ( lastIteration ) {
+            subtask.classList.add('subtask-add');
+        } else {
             subtask.value = task.subtasks[i].title;
         }
 
         subtaskLi.appendChild(subtask);
         subtaskUl.appendChild(subtaskLi);
+
     }
 
     // form.appendChild(subtaskUl);
@@ -76,7 +79,7 @@ function createTaskSummary(task, taskIndex, projects) {
     // PRIORITY
     const fieldset = document.createElement('fieldset');
     const legend = document.createElement('legend');
-    legend.textContent = "Priority";
+    legend.textContent = "Priority:";
 
     fieldset.appendChild(legend);
 
@@ -89,6 +92,7 @@ function createTaskSummary(task, taskIndex, projects) {
 
     for (let priority of priorityVal) {
         let priLi = document.createElement('li');
+        priLi.classList.add(priority.text);
 
         let priLabel = document.createElement('label');
         // priLabel.for = priority.text;
@@ -112,29 +116,29 @@ function createTaskSummary(task, taskIndex, projects) {
 
 
     // PROJECTS LIST
-    const selLabel = document.createElement('label');
-    selLabel.for = "projects-select";
-    selLabel.textContent = "Select project";
-    const select = document.createElement('select');
-    select.classList.add('task-project-select');
-    select.id = "projects-select";
+    // const selLabel = document.createElement('label');
+    // selLabel.for = "projects-select";
+    // selLabel.textContent = "Select project";
+    // const select = document.createElement('select');
+    // select.classList.add('task-project-select');
+    // select.id = "projects-select";
 
-    for (let i = 0; i < projects.length; i++) {
-        let opt = document.createElement('option');
-        // Project index
-        opt.value = i;
-        opt.textContent = projects[i].title;
+    // for (let i = 0; i < projects.length; i++) {
+    //     let opt = document.createElement('option');
+    //     // Project index
+    //     opt.value = i;
+    //     opt.textContent = projects[i].title;
 
-        if (i === task.project) { opt.selected = true }
+    //     if (i === task.project) { opt.selected = true }
 
-        select.appendChild(opt);
-    }
+    //     select.appendChild(opt);
+    // }
 
-    arrFormSections.push({section: "project-select", controls: [selLabel, select]})
+    // arrFormSections.push({section: "project-select", controls: [selLabel, select]})
 
 
     const submitBtn = document.createElement('button');
-    submitBtn.id = "submitBtn"
+    submitBtn.classList.add('btn-submit');
     submitBtn.type = "submit";
     submitBtn.textContent = "Save";
 
