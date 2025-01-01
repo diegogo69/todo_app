@@ -1,5 +1,6 @@
 import { handlers } from "./event_handlers.js";
 import { createTasksWrapper } from "./create_tasks_wrapper.js";
+import { TASKS } from "./tasks.js";
 
 
 // Create project's html module
@@ -19,7 +20,14 @@ function createProjectWrapper(project, index) {
     heading.appendChild(description);
 
     // Tasks wrapper
-    const tasksWrapper = createTasksWrapper(project);
+    // Array of [task, index]
+    let tasks = [];
+    for (let taskIndex of project.tasks) {
+        let task = TASKS.get(taskIndex);
+        tasks.push({task, taskIndex})
+    }
+
+    const tasksWrapper = createTasksWrapper(tasks);
     // Footer
     const footer = document.createElement('footer');
 

@@ -33,7 +33,7 @@ function createProjectSummary(project, projectIndex) {
     const submitBtn = document.createElement('button');
     submitBtn.classList.add('btn-submit');
     submitBtn.type = "submit";
-    submitBtn.textContent = "Add";
+    submitBtn.textContent = "Save";
 
     const cancelBtn = document.createElement('button');
     cancelBtn.type = "button";
