@@ -5,14 +5,18 @@ const SVGTaskCompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2
 
 const priority = [null, "Normal", "Important", "Urgent"];
 
-function createTasksWrapper(project) {
+function createTasksWrapper(tasks) {
     const tasksWrapper = document.createElement('div');
     tasksWrapper.classList.add('tasks-wrapper');
     const tasksUl = document.createElement('ul');
 
-    for (let task of project.tasks) {
+    // tasks is an array of {task, taskIndex} obj items
+    for (let item of tasks) {
+        // Actual Task instance
+        let task = item.task;
         const taskLi = document.createElement('li');
-        taskLi.dataset.taskIndex = project.tasks.indexOf(task);
+        // Task instance index within TASKS arr
+        taskLi.dataset.taskIndex = item.taskIndex;
         taskLi.dataset.projectIndex = task.project;
         taskLi.classList.add('task-item');
 
