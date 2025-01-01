@@ -32,7 +32,8 @@ const handlers = ( function() {
         PROJECTS.add(newProject);
         console.log('Project added succesfully to projects array');
         // Reasign new projects array in localStorage
-        todoLocalstorage.update.projects();   
+        todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks(); 
         // Render projects in toolbar
         const toolProjects = createToolProjects(PROJECTS.get());
         domRender.toolProjects(toolProjects);
@@ -58,6 +59,7 @@ const handlers = ( function() {
         console.log(`Project data update succesfully`);
 
         todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks();
         displayProjectWrapper(project);
         const toolProjects = createToolProjects(PROJECTS.get());
         domRender.toolProjects(toolProjects);
@@ -83,6 +85,7 @@ const handlers = ( function() {
         console.log('Project removed succesfully')
 
         todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks();
         // displayProjectWrapper(project);
         const toolProjects = createToolProjects(PROJECTS.get());
         domRender.toolProjects(toolProjects);
@@ -107,9 +110,12 @@ const handlers = ( function() {
         console.log(`New task added to TASKS array on index ${newTaskIndex}`);
 
         // Add new task to default project
-        PROJECTS.addTaskToProject(newTask, newTask.project);
+        const project = PROJECTS.get(newTask.project);
+        project.addTask(newTaskIndex);
+        // PROJECTS.addTaskToProject(newTask, newTask.project);
         // Assign PROJECTS array to localStorage 
         todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks();
         clearEditorNode();
 
         displayProjectWrapper(taskData.project);
@@ -124,7 +130,6 @@ const handlers = ( function() {
         // Extract form data
         const taskData = getFormData(this); // {title, description, subtasks, project}
         // Empty form
-        this.reset();
 
         // Reference task from tasks arr via taskIndex
         const task = TASKS.get(taskData.taskIndex);
@@ -133,6 +138,7 @@ const handlers = ( function() {
         console.log(`Task data update succesfully`);
 
         // Update local storage
+        todoLocalstorage.update.projects();
         todoLocalstorage.update.tasks();
 
         displayProjectWrapper(taskData.project);
@@ -299,20 +305,9 @@ const handlers = ( function() {
         const taskItem = event.currentTarget;
         let task, taskIndex, projectIndex;
 
-        const projectWrapper = taskItem.closest(".project-wrapper");
-        if (projectWrapper) {
-            const taskProjectIndex = taskItem.dataset.taskIndex;
-            projectIndex = projectWrapper.dataset.projectIndex;
-    
-            task = PROJECTS.getTask(taskProjectIndex, projectIndex);
-            taskIndex = TASKS.indexOf(task);
-        }
-
-        else {
-            taskIndex = taskItem.dataset.taskIndex;
-            projectIndex = taskItem.dataset.projectIndex;
-            task = TASKS.get(taskIndex);
-        }
+        taskIndex = taskItem.dataset.taskIndex;
+        projectIndex = taskItem.dataset.projectIndex;
+        task = TASKS.get(taskIndex);
         
         const taskWrapper = createTaskSummary(task, taskIndex, PROJECTS.get());
         domRender.editorForm(taskWrapper);
