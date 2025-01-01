@@ -20,13 +20,16 @@ const todoLocalstorage = ( function() {
             // PROJECTS.projects.push(defProject);
             // Assign PROJECTS array to localStorage 
             update.projects();
+            update.tasks();
         } 
     
         // If projects in local storage
         else {
             // Parse local storage projects into PROJECTS.projects
-            const projectsParsed = JSON.parse(localStorage.getItem('projects'));
+            const projectsParsed = JSON.parse(localStorage.getItem(PROJECTS_KEY));
+            const tasksParsed = JSON.parse(localStorage.getItem(TASKS_KEY));
             PROJECTS.set(projectsParsed);
+            TASKS.set(tasksParsed);
         }
     }
     

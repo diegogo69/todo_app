@@ -18,7 +18,7 @@ const DEFAULT_PROJECT = 0;
 // ---------------- LOCAL STORAGE ------------------
 
 // Clean Local storage
-localStorage.clear();
+// localStorage.clear();
 
 // -------------------- DOM STUFF -------------------------
 const navNode = document.querySelector('nav');

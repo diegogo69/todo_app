@@ -269,7 +269,7 @@ const handlers = ( function() {
     // Update the projects shown in the toolbar
     function displayProjectWrapper(project) {
         // project might be an index or a Project obj
-        const isProjectObj = project instanceof Project;
+        const isProjectObj = (typeof project === 'object');
         let projectIndex;
         
         // If arg is not a project obj. but an index
