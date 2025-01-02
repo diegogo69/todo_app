@@ -20,7 +20,10 @@ const todoLocalstorage = ( function() {
             // Parse projects. this return simple obj not instances of Project
             const projectsParsed = JSON.parse(localStorage.getItem(PROJECTS_KEY));
             // Create actual instances of Project
-            const projectsInstanced = projectsParsed.map(function(projectParsed) {
+            const projectsInstanced = projectsParsed.map(function(projectParsed) {                
+                // If project do not exists. deleted el
+                if (projectParsed === null) { return projectParsed }
+
                 const projectInstanced = Project.newProject(projectParsed);
                 return projectInstanced;
             });
@@ -42,6 +45,10 @@ const todoLocalstorage = ( function() {
             const tasksParsed = JSON.parse(localStorage.getItem(TASKS_KEY));
             // Create actual instances of Project
             const tasksInstanced = tasksParsed.map(function(taskParsed) {
+                // If project do not exists. deleted el
+                if (taskParsed === null) { return taskParsed }
+                console.log('taskParsed data');
+                console.log(taskParsed);
                 const taskInstanced = Task.newTask(taskParsed);
                 return taskInstanced;
             });
@@ -80,11 +87,11 @@ const todoLocalstorage = ( function() {
         },
 
         projects() {
-            this.update(PROJECTS_KEY, PROJECTS.get());
+            this.update(PROJECTS_KEY, PROJECTS.getAll());
         },
 
         tasks() {
-            this.update(TASKS_KEY, TASKS.get());
+            this.update(TASKS_KEY, TASKS.getAll());
         },
 
     }
