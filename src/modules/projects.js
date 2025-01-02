@@ -8,9 +8,21 @@ const PROJECTS = ( function() {
         projects = value;
     }
 
+    // Return truthy items only. Existing projects
     function get(index=null) {
         // If no index passed return whole array
-        if (index === null) { return projects }
+        if (index === null) { 
+            // Return only projects not deleted
+            return projects.filter(project => project !== null)
+        }
+        return projects[index];
+    }
+
+    // Return all items. Existing and deleted projects
+    function getAll(index=null) {
+        // If no index passed return whole array
+        if (index === null) {  return projects }
+        // Else return specific project
         return projects[index];
     }
 
@@ -21,10 +33,8 @@ const PROJECTS = ( function() {
 
     // Remove project from projects
     function remove(project) {
-        let index = projects.indexOf(project);
-        if (index > -1) {
-            projects.splice(index, 1);
-        }
+        const index = projects.indexOf(project);
+        if (index > -1) { projects[index] = null }
     }
 
     // Index of some project within the array
@@ -36,18 +46,10 @@ const PROJECTS = ( function() {
         return projects[projectIndex]["tasks"][taskIndex];
     }
 
-    // Add task to project. xd
-    function addTaskToProject(task, projectIndex) {
-        projects[projectIndex]["tasks"].push(task);
-        console.log('Task added to default project SUCCESSFULLY');
-    }
-
     // make projects private
     return {
         get, set, add, remove,
-        addTaskToProject, indexOf,
-        getTask,
-        
+        indexOf, getTask, getAll,
     };
 
 })();
