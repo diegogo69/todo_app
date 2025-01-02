@@ -13,7 +13,7 @@ function createWrapper(project) {
     wrapper.appendChild(heading);
 
     // Tasks wrapper
-    const tasksWrapper = createTasksWrapper(project);
+    const tasksWrapper = createTasksWrapper(project.tasks);
 
     wrapper.appendChild(tasksWrapper);
 

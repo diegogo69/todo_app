@@ -118,7 +118,6 @@ const handlers = ( function() {
         // Add new task to default project
         const project = PROJECTS.get(newTask.project);
         project.addTask(newTaskIndex);
-        // PROJECTS.addTaskToProject(newTask, newTask.project);
         // Assign PROJECTS array to localStorage 
         todoLocalstorage.update.projects();
         todoLocalstorage.update.tasks();
