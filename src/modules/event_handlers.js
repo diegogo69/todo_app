@@ -156,18 +156,19 @@ const handlers = ( function() {
         const icon = event.currentTarget;
         const taskLi = icon.closest('.task-item');
         const taskIndex = taskLi.dataset.taskIndex;
-        let task, project, projectIndex;
         
-        const projectWrapper = this.closest('.project-wrapper');
-
-        task = TASKS.get(taskIndex);
-        projectIndex = task.project;
-        project = PROJECTS.get(projectIndex);
+        const task = TASKS.get(taskIndex);
+        const projectIndex = task.project;
+        const project = PROJECTS.get(projectIndex);
 
         // Remove from project. tasks in project are numeric indices
         // project.removeTask(task);
         project.removeTask(taskIndex);
         TASKS.remove(task);
+
+        // Update local storage
+        todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks();
 
         displayProjectWrapper(projectIndex);
     }
@@ -179,19 +180,14 @@ const handlers = ( function() {
         // task li el
         const taskLi = icon.closest('.task-item');
         
-        let projectIndex, taskIndex;
-        let project, task;
-        
         // get index from task el
-        projectIndex = taskLi.dataset.projectIndex;
         // task index in TASKS
-        taskIndex = taskLi.dataset.taskIndex;
+        const taskIndex = taskLi.dataset.taskIndex;
 
         // Mark complete
-        project = PROJECTS.get(projectIndex);
-        task = TASKS.get(taskIndex);
+        const task = TASKS.get(taskIndex);
 
-        const completed = task.setComplete();
+        const completed = task.setComplete()
 
         if (completed) {
             taskLi.classList.add('completed');
@@ -200,6 +196,10 @@ const handlers = ( function() {
             taskLi.classList.remove('completed');
             icon.innerHTML = SVGTaskUncompleted;
         }
+
+        // Update local storage
+        todoLocalstorage.update.projects();
+        todoLocalstorage.update.tasks();
     }
 
     function allTasks(event) {
@@ -218,6 +218,8 @@ const handlers = ( function() {
 
     function tasksCompleted(event) {
         const allTasks = TASKS.getCompleted();
+        console.log('TASKS COMPLETED');
+        console.log(allTasks);
 
         let tasks = [];
         for (let task of allTasks) {
