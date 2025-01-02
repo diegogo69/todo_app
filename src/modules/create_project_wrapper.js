@@ -23,6 +23,8 @@ function createProjectWrapper(project, index) {
     // Array of [task, index]
     let tasks = [];
     for (let taskIndex of project.tasks) {
+        // If null it has been deleted. skip
+        if (taskIndex === null) { continue }
         let task = TASKS.get(taskIndex);
         tasks.push({task, taskIndex})
     }
