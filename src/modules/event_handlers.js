@@ -55,6 +55,8 @@ const handlers = ( function() {
         const projectData = getFormData(this);
 
         const project = PROJECTS.get(projectData.projectIndex);
+        // if project dont exists do nothing
+        if (project === null) { return }
         project.updateData(projectData);
         console.log(`Project data update succesfully`);
 
@@ -66,7 +68,7 @@ const handlers = ( function() {
     }
 
 
-    // REMOVE TASK
+    // REMOVE Project
     function projectRemove(event) {
         const icon = event.currentTarget;
         
@@ -77,10 +79,14 @@ const handlers = ( function() {
             console.log('Cannot remove default project')
             return
         }
-        // Reference task
+        // Reference Project
         const project = PROJECTS.get(projectIndex);
 
-        // Remove from project
+        // Delete tasks that belongs to project as well
+        for (let taskIndex of project.tasks) {
+            let task = TASKS.get(taskIndex);
+            TASKS.remove(task);
+        }
         PROJECTS.remove(project);
         console.log('Project removed succesfully')
 
@@ -153,18 +159,14 @@ const handlers = ( function() {
         let task, project, projectIndex;
         
         const projectWrapper = this.closest('.project-wrapper');
-        if (projectWrapper) {
-            projectIndex = projectWrapper.dataset.projectIndex;
-            project = PROJECTS.get(projectIndex);
-            task = project['tasks'][taskIndex];
-        } else {
-            task = TASKS.get(taskIndex);
-            projectIndex = task.project;
-            project = PROJECTS.get(projectIndex);
-        }
 
-        // Remove from project
-        project.removeTask(task);
+        task = TASKS.get(taskIndex);
+        projectIndex = task.project;
+        project = PROJECTS.get(projectIndex);
+
+        // Remove from project. tasks in project are numeric indices
+        // project.removeTask(task);
+        project.removeTask(taskIndex);
         TASKS.remove(task);
 
         displayProjectWrapper(projectIndex);
@@ -179,28 +181,15 @@ const handlers = ( function() {
         
         let projectIndex, taskIndex;
         let project, task;
-        // reference project wrapper to get project index
-        const projectWrapper = this.closest('.project-wrapper');
         
-        // If not a project wrapper get index from task el
-        if (!projectWrapper) {
-            projectIndex = taskLi.dataset.projectIndex;
-            // task index in TASKS
-            taskIndex = taskLi.dataset.taskIndex;
+        // get index from task el
+        projectIndex = taskLi.dataset.projectIndex;
+        // task index in TASKS
+        taskIndex = taskLi.dataset.taskIndex;
 
-            // Mark complete
-            project = PROJECTS.get(projectIndex);
-            task = TASKS.get(taskIndex);
-
-        } else {
-            projectIndex = projectWrapper.dataset.projectIndex;
-            // task index within project
-            taskIndex = taskLi.dataset.taskIndex;
-
-            // Mark complete
-            project = PROJECTS.get(projectIndex);
-            task = project['tasks'][taskIndex];
-        }
+        // Mark complete
+        project = PROJECTS.get(projectIndex);
+        task = TASKS.get(taskIndex);
 
         const completed = task.setComplete();
 
@@ -215,21 +204,42 @@ const handlers = ( function() {
 
     function allTasks(event) {
         const allTasks = TASKS.get();
-        const allTasksWrapper = createWrapper({title: "All tasks", tasks: allTasks});
+
+        let tasks = [];
+        for (let task of allTasks) {
+            let taskIndex = TASKS.indexOf(task);
+            tasks.push({task, taskIndex})
+        }
+
+        const allTasksWrapper = createWrapper({title: "All tasks", tasks});
         domRender.projectWrapper(allTasksWrapper);
         console.log('All tasks shown')
     }
 
     function tasksCompleted(event) {
         const allTasks = TASKS.getCompleted();
-        const allTasksWrapper = createWrapper({title: "Tasks completed", tasks: allTasks});
+
+        let tasks = [];
+        for (let task of allTasks) {
+            let taskIndex = TASKS.indexOf(task);
+            tasks.push({task, taskIndex})
+        }
+
+        const allTasksWrapper = createWrapper({title: "Tasks completed", tasks});
         domRender.projectWrapper(allTasksWrapper);
         console.log('All tasks completed shown')
     }
 
     function tasksPlanned(event) {
         const allTasks = TASKS.getPlanned();
-        const allTasksWrapper = createWrapper({title: "Tasks planned", tasks: allTasks});
+
+        let tasks = [];
+        for (let task of allTasks) {
+            let taskIndex = TASKS.indexOf(task);
+            tasks.push({task, taskIndex})
+        }
+
+        const allTasksWrapper = createWrapper({title: "Tasks planned", tasks});
         domRender.projectWrapper(allTasksWrapper);
         console.log('All tasks completed shown')
     }
