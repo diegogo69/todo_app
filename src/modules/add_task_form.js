@@ -17,10 +17,9 @@ function createAddTaskForm(projects) {
     taskTitle.classList.add('form-title');
     taskTitle.rows = 1;
     taskTitle.spellcheck = false;
-    taskTitle.placeholder = "Add new task..."
-    taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
+    taskTitle.placeholder = "Add a task title";
+    // taskTitle.value = "TITLE FOR DOM NEWLY CREATED TASK YEIII";
 
-    // form.appendChild(taskTitle);
     arrFormSections.push({section: "title", controls: [taskTitle]});
 
 
@@ -28,9 +27,8 @@ function createAddTaskForm(projects) {
     taskDescription.classList.add('form-description');
     taskDescription.spellcheck = false;
     taskDescription.placeholder = "Notes";
-    taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
+    // taskDescription.value = "DESCRIPTION FOR DOM NEWLY TASK CREATED BBBBB";
 
-    // form.appendChild(taskDescription);
     arrFormSections.push({section: "description", controls: [taskDescription]});
 
 
@@ -47,10 +45,8 @@ function createAddTaskForm(projects) {
     subtask.classList.add('subtask-add');
     subtask.placeholder = "Add a new subtask";
     
-    // form.appendChild(subtaskHeading);
     subtaskLi.appendChild(subtask);
     subtaskUl.appendChild(subtaskLi);
-    // form.appendChild(subtaskUl);
     arrFormSections.push({section: "subtasks", controls: [subtaskHeading, subtaskUl]});
 
 
@@ -63,7 +59,7 @@ function createAddTaskForm(projects) {
     dateControl.classList.add('task-due-date');
     dateControl.type = "date";
     const today = format(new Date(), "yyyy-MM-dd");
-    // dateControl.min = today;
+    dateControl.min = today;
     dateControl.value = today;
 
     arrFormSections.push({section: "due-date", controls: [dateLabel, dateControl]});
@@ -88,7 +84,6 @@ function createAddTaskForm(projects) {
         priLi.classList.add(priority.text);
 
         let priLabel = document.createElement('label');
-        // priLabel.for = priority.text;
         priLabel.setAttribute('for', priority.text);
         priLabel.textContent = priority.text;
         
@@ -141,7 +136,6 @@ function createAddTaskForm(projects) {
     cancelBtn.textContent = "Cancel";
     cancelBtn.addEventListener('click', handlers.clearEditorNode);
 
-    // form.appendChild(submitBtn);
     arrFormSections.push({section: "buttons", controls: [submitBtn, cancelBtn]});
 
     // Create wrappers for form section

@@ -1,6 +1,6 @@
 import { handlers } from "./event_handlers.js";
 
-function createTaskSummary(task, taskIndex, projects) {
+function createTaskSummary(task, taskIndex) {
     const form = document.createElement('form');
     form.classList.add('task-form');
     form.dataset.formType = "task";
@@ -8,6 +8,7 @@ function createTaskSummary(task, taskIndex, projects) {
     form.dataset.projectIndex = task.project;
     // On submit event listener
     form.addEventListener('submit', handlers.taskUpdate);
+    
     // Form sections arr. later to be added in wrapppers
     let arrFormSections = [];
 
@@ -19,7 +20,6 @@ function createTaskSummary(task, taskIndex, projects) {
     taskTitle.placeholder = "Add new task..."
     taskTitle.value = task.title
 
-    // form.appendChild(taskTitle);
     arrFormSections.push({section: "title", controls: [taskTitle]});
 
 
@@ -29,7 +29,6 @@ function createTaskSummary(task, taskIndex, projects) {
     taskDescription.placeholder = "Notes";
     taskDescription.value = task.description;
 
-    // form.appendChild(taskDescription);
     arrFormSections.push({section: "description", controls: [taskDescription]});
 
 
@@ -59,17 +58,17 @@ function createTaskSummary(task, taskIndex, projects) {
 
     }
 
-    // form.appendChild(subtaskUl);
     arrFormSections.push({section: "subtasks", controls: [subtaskHeading, subtaskUl]});
         
 
     // DATE
     const dateLabel = document.createElement('label');
-    dateLabel.for = "dateControl"
+    dateLabel.setAttribute("for", "dateControl");
     dateLabel.textContent = "Due date:"
 
     const dateControl = document.createElement('input');
     dateControl.classList.add('task-due-date');
+    dateControl.id = "dateControl";
     dateControl.type = "date";
     dateControl.value = task.dueDate;
 
@@ -95,7 +94,6 @@ function createTaskSummary(task, taskIndex, projects) {
         priLi.classList.add(priority.text);
 
         let priLabel = document.createElement('label');
-        // priLabel.for = priority.text;
         priLabel.setAttribute('for', priority.text);
         priLabel.textContent = priority.text;
         
@@ -115,28 +113,6 @@ function createTaskSummary(task, taskIndex, projects) {
     arrFormSections.push({section: "priority", controls: [fieldset]});
 
 
-    // PROJECTS LIST
-    // const selLabel = document.createElement('label');
-    // selLabel.for = "projects-select";
-    // selLabel.textContent = "Select project";
-    // const select = document.createElement('select');
-    // select.classList.add('task-project-select');
-    // select.id = "projects-select";
-
-    // for (let i = 0; i < projects.length; i++) {
-    //     let opt = document.createElement('option');
-    //     // Project index
-    //     opt.value = i;
-    //     opt.textContent = projects[i].title;
-
-    //     if (i === task.project) { opt.selected = true }
-
-    //     select.appendChild(opt);
-    // }
-
-    // arrFormSections.push({section: "project-select", controls: [selLabel, select]})
-
-
     const submitBtn = document.createElement('button');
     submitBtn.classList.add('btn-submit');
     submitBtn.type = "submit";
@@ -148,7 +124,6 @@ function createTaskSummary(task, taskIndex, projects) {
     cancelBtn.textContent = "Close";
     cancelBtn.addEventListener('click', handlers.clearEditorNode);
 
-    // form.appendChild(submitBtn);
     arrFormSections.push({section: "buttons", controls: [submitBtn, cancelBtn]});
 
 

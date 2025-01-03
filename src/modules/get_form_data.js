@@ -34,7 +34,7 @@ function getFormData(form) {
 
         // DATE
         let dueDate = format(new Date(), "yyyy-MM-dd");
-        const taskDate = form.querySelector('.task-due-date:checked');
+        const taskDate = form.querySelector('.task-due-date');
         if (taskDate) { dueDate = taskDate.value; }
 
 

@@ -12,19 +12,17 @@ function createAddProjectForm() {
     projectTitle.rows = 1;
     projectTitle.classList.add('form-title');
     projectTitle.spellcheck = false;
-    projectTitle.placeholder = "Add new project"
-    projectTitle.value = "TITLE FOR DOM NEWLY CREATED PROJECT YEIII";
+    projectTitle.placeholder = "Add a project title"
+    // projectTitle.value = "TITLE FOR DOM NEWLY CREATED PROJECT YEIII";
 
-    // form.appendChild(projectTitle);
     arrFormSections.push({section: "title", controls: [projectTitle]});
 
     const projectDescription = document.createElement('textarea');
     projectDescription.classList.add('form-description');
     projectDescription.spellcheck = false;
     projectDescription.placeholder = "Notes";
-    projectDescription.value = "DESCRIPTION FOR DOM NEWLY PROJECT CREATED BBBBB";
+    // projectDescription.value = "DESCRIPTION FOR DOM NEWLY PROJECT CREATED BBBBB";
 
-    // form.appendChild(projectDescription);
     arrFormSections.push({section: "description", controls: [projectDescription]});
 
     const submitBtn = document.createElement('button');
@@ -38,7 +36,6 @@ function createAddProjectForm() {
     cancelBtn.textContent = "Cancel";
     cancelBtn.addEventListener('click', handlers.clearEditorNode);
 
-    // form.appendChild(submitBtn);
     arrFormSections.push({section: "buttons", controls: [submitBtn, cancelBtn]});
     
     // Create wrappers for form section

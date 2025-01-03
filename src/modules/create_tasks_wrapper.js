@@ -55,10 +55,18 @@ function createTasksWrapper(tasks) {
         taskPriority.classList.add(priority[task.priority]);
         taskPriority.textContent = priority[task.priority];
 
+        const contentWrapper = document.createElement('div');
+        contentWrapper.classList.add('content-wrapper');
+
+        const detailsWrapper = document.createElement('div');
+        detailsWrapper.classList.add('details-wrapper');
+
         taskLi.appendChild(iconComplete);
-        taskLi.appendChild(taskTitle);
-        taskLi.appendChild(dueDate);
-        taskLi.appendChild(taskPriority);
+        contentWrapper.appendChild(taskTitle);
+        detailsWrapper.appendChild(dueDate);
+        detailsWrapper.appendChild(taskPriority);
+        contentWrapper.appendChild(detailsWrapper);
+        taskLi.appendChild(contentWrapper);
         taskLi.appendChild(iconRemove);
         tasksUl.appendChild(taskLi);
     }
