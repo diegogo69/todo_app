@@ -4,16 +4,12 @@ import "./static/styles.css";
 
 import { PROJECTS } from "./modules/projects.js";
 import { todoLocalstorage } from "./modules/local_storage_handler.js";
-import { domRender } from "./modules/domRender.js";
-// CREATE DOM ELEMENTS
-import { createAddTaskForm  } from "./modules/add_task_form.js";
-import { createAddProjectForm  } from "./modules/add_project_form.js";
-import { createToolProjects } from "./modules/create_tool_projects.js";
 import { createProjectWrapper } from "./modules/create_project_wrapper.js";
-import { handlers } from "./modules/event_handlers.js";
+import { createToolProjects } from "./modules/create_tool_projects.js";
+import { domRender } from "./modules/domRender.js";
+import { initDom } from "./modules/init_dom.js";
 
 const DEFAULT_PROJECT = 0;
-
 
 // ---------------- LOCAL STORAGE ------------------
 
@@ -21,60 +17,19 @@ const DEFAULT_PROJECT = 0;
 // localStorage.clear();
 
 // -------------------- DOM STUFF -------------------------
-const navNode = document.querySelector('nav');
 
-const addTaskBtn = navNode.querySelector('#addTask');
-addTaskBtn.addEventListener('click', displayTaskForm);
+const init = ( function() {
+    // Initialize local storage
+    todoLocalstorage.init();
+    // Initialize dom elements, event listeners and handlers
+    initDom();
 
-const addProjectBtn = navNode.querySelector('#addProject');
-addProjectBtn.addEventListener('click', displayProjectForm);
-
-const allTaskNode = navNode.querySelector('.tasks-all');
-allTaskNode.addEventListener('click', handlers.allTasks);
-
-const tasksCompletedNode = navNode.querySelector('.tasks-completed');
-tasksCompletedNode.addEventListener('click', handlers.tasksCompleted);
-
-
-const tasksPlannedNode = navNode.querySelector('.tasks-planned');
-tasksPlannedNode.addEventListener('click', handlers.tasksPlanned);
-
-// ------------ DOM RENDERING ------------
-
-
-// This manages creating and adding the node, eventlisteners
-function displayTaskForm() {
-    // Creeate form
-    const addTaskForm = createAddTaskForm(PROJECTS.get());
-    // Render form
-    domRender.editorForm(addTaskForm);
-    // Autofocus
-    addTaskForm.focus()
-}
-
-// Add project form
-function displayProjectForm() {
-    // Create add project form
-    const addProjectForm = createAddProjectForm();
-    // Render add project's project form
-    domRender.editorForm(addProjectForm)
-    // Autofocus. FIXXXX
-    addProjectForm.focus()
-}
-
-function displayToolProjects() {
+    // Render toolbar list of projects
     const projectsUl = createToolProjects(PROJECTS.get());
     domRender.toolProjects(projectsUl);
-}
 
-function init() {
-    todoLocalstorage.init();
-    displayToolProjects();
-
+    // Render default project
     const defaultProject = PROJECTS.get(DEFAULT_PROJECT);
     const projectWrapper = createProjectWrapper(defaultProject, DEFAULT_PROJECT);
-
     domRender.projectWrapper(projectWrapper); 
-}
-
-init();
+} )();

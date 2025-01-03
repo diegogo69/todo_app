@@ -1,19 +1,21 @@
+import { todoLocalstorage } from "./local_storage_handler.js";
 import { PROJECTS } from "./projects.js";
 import { TASKS } from "./tasks";
-import { getFormData } from "./get_form_data";
-import { todoLocalstorage } from "./local_storage_handler.js";
 import { Task } from "./task.js";
 import { Project } from "./project.js";
 import { createProjectWrapper } from "./create_project_wrapper.js";
-import { domRender } from "./domRender.js";
 import { createToolProjects } from "./create_tool_projects.js";
 import { createTaskSummary } from "./create_task_summary.js";
 import { createProjectSummary } from "./create_project_summary.js";
 import { createWrapper } from "./create_wrapper.js";
-
+import { createAddTaskForm  } from "./add_task_form.js";
+import { createAddProjectForm  } from "./add_project_form.js";
+import { getFormData } from "./get_form_data";
+import { domRender } from "./domRender.js";
 
 const SVGTaskCompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-marked-circle</title><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
 const SVGTaskUncompleted = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>checkbox-blank-circle-outline</title><path d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>';
+
 
 const handlers = ( function() {
 
@@ -40,10 +42,7 @@ const handlers = ( function() {
         domRender.clear.editorNode();
         displayProjectWrapper(newProject);
     }
-
-    function clearEditorNode() {
-        domRender.clear.editorNode();
-    }
+    
 
     // Edit project data
     function projectUpdate(event) {
@@ -161,26 +160,23 @@ const handlers = ( function() {
         const project = PROJECTS.get(projectIndex);
 
         // Remove from project. tasks in project are numeric indices
-        // project.removeTask(task);
         project.removeTask(taskIndex);
         TASKS.remove(task);
 
         // Update local storage
         todoLocalstorage.update.projects();
         todoLocalstorage.update.tasks();
-
-        displayProjectWrapper(projectIndex);
+        // Remove task item node from wrapper
+        taskLi.parentNode.removeChild(taskLi)
     }
 
 
     function taskCompleted(event) {
         // Completed icon
         const icon = event.currentTarget;
-        // task li el
-        const taskLi = icon.closest('.task-item');
         
-        // get index from task el
-        // task index in TASKS
+        // get index in TASKS from task el
+        const taskLi = icon.closest('.task-item');
         const taskIndex = taskLi.dataset.taskIndex;
 
         // Mark complete
@@ -283,6 +279,28 @@ const handlers = ( function() {
     }
 
 
+    // This manages creating and adding the node, eventlisteners
+    function displayTaskForm() {
+        // Creeate form
+        const addTaskForm = createAddTaskForm(PROJECTS.get());
+        // Render form
+        domRender.editorForm(addTaskForm);
+        // Autofocus
+        addTaskForm.focus()
+    }
+    
+
+    // Add project form
+    function displayProjectForm() {
+        // Create add project form
+        const addProjectForm = createAddProjectForm();
+        // Render add project's project form
+        domRender.editorForm(addProjectForm)
+        // Autofocus. FIXXXX
+        addProjectForm.focus()
+    }
+
+
     // Update the projects shown in the toolbar
     function displayProjectWrapper(project) {
         // project might be an index or a Project obj
@@ -325,6 +343,11 @@ const handlers = ( function() {
         
     }
 
+    // Close any editor form
+    function clearEditorNode() {
+        domRender.clear.editorNode();
+    }
+
     // Text area dynamic height
     function textareaAutoResize() {
         this.style.height = 'auto';
@@ -340,11 +363,12 @@ const handlers = ( function() {
     }
 
     return {
-        projectSubmit, toolProject, taskSubmit,
+        projectSubmit, taskSubmit, displayProjectWrapper,
         textareaAutoHeight, taskCompleted, displayTaskSummary,
-        taskUpdate, taskRemove, projectUpdate,
-        projectRemove, allTasks, tasksCompleted,
-        tasksPlanned, clearEditorNode, 
+        taskUpdate, taskRemove, projectUpdate, projectRemove,
+        allTasks, tasksCompleted, tasksPlanned,
+        clearEditorNode, displayTaskForm, toolProject,
+        displayProjectForm, 
 
     }
 } )();
