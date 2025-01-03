@@ -1,0 +1,1 @@
+A todo list web app that uses localStorage API as part of The Odin Project curriculum. Watch it [live](https://diegogo69.github.io/todo_app/).
