@@ -1,6 +1,9 @@
+import { format } from "date-fns";
+const today = format(new Date(), "yyyy-MM-dd");
+
 // Task class
 class Task {
-    constructor( { title="Unnamed task", project=null, dueDate=null, priority=1, description="",  completed=false, subtasks=[], taskgroup=null} ) {
+    constructor( { title="Unnamed task", project=null, dueDate=today, priority=1, description="",  completed=false, subtasks=[], taskgroup=null} ) {
         this.title = title; // title
         this.project = project; // numeric index
         this.dueDate = dueDate; // Date string

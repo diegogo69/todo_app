@@ -29,6 +29,8 @@ const PROJECTS = ( function() {
     // Add project from projects
     function add(project) {
         projects.push(project);
+        return projects.indexOf(project);
+
     }
 
     // Remove project from projects
